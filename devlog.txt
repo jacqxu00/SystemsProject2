@@ -3,3 +3,6 @@ xuJ -- 2017-12-21 11:01
 	
 xuJ -- 2017-12-22 11:09
 	finished DESIGN.txt and created a basic README.md
+	
+kangY -- 2017-12-22 11:20
+	added repo as submodule to enterprise
