@@ -23,28 +23,39 @@ We are using networking between two computers. We will use semaphores to control
 
 Role Assignment:
 	Jackie:
-	- display and front-end
+	- display
 	Yedoh:
-	- memory storage
+	- receive & store user input
 	Winnie:
-	- 
+	- receive & store user input
 
 Data Structures:
-- struct: the coordinates of each ship (one struct per ship)
+- struct ship: the info of each ship
 	- char * type, struct * coors
-- struct: coordinates
+- struct coor: coordinates
 	- int col, char row
-- int **: grids
-	- 
-- file: 
+- char ** board: grids
+	- empty slot: .
+	- hit: H
+	- miss: *
+	- un-hit ship coordinate: first letter of ship name (A, B, C, S, or D)
+- socket: to transfer information
+	- just stores boards
 
 Algorithms:
-
-
+1. after receiving ship placement: calculate all coordinates and prints error message if off board
+				   edits structs and grid based on coordinates
+2. while loop for playing input: block when it's the other players turn
+				 print clear messages about whose turn it is
+	    			 edits stucts and grid based on player moves
+				 displays new board for both players
+3. ending conditions: when all ships on one board have sunken
+		      print win/loss messages for each player
+	    
 Timeline:
 	12.26.17: set up program files (.h, .c, makefile)
 	12.27.17: set up data structures
-	12.28.17: display and receive user input (all on one computer)
+	12.28.17: display and receive user input (on one computer with two processes)
 	12.29.17: finish with placing ships for both users
 	01.02.18: functioning data storage and display hit/miss
 	01.05.18: fully working on one computer
