@@ -1,5 +1,5 @@
 xuJ -- 2017-12-21 11:01
 	finished most of DESIGN.txt 
 	
-xuJ -- 2017-12-22 10:49
-	created timeline in DESIGN.txt and a basic README.md
+xuJ -- 2017-12-22 11:09
+	finished DESIGN.txt and created a basic README.md
