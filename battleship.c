@@ -39,38 +39,50 @@ struct destroyer {
 	char coor[256];
 };
 
-void setup () {
-	strcpy(A.name, "A");
-	A.length = 5;
-	
-	strcpy(B.name, "B");
-	B.length = 4;
-	
-	strcpy(C.name, "C");
-	C.length = 3;
-	
-	strcpy(S.name, "S");
-	S.length = 3;
-	
-	strcpy(D.name, "D");
-	D.length = 2;
+struct aircraft *create_aircraft (char *name, int size) {
+	struct aircraft *A = (struct aircraft *)malloc(sizeof(struct aircraft));
+	strcpy(A->name, name);
+	A->length = size;
+	return A;
 }
-
-void printAircraft (struct aircraft a) {
-	printf("%s, %d", a.name, a.length);
+struct battleship *create_battleship (char *name, int size) {
+	struct battleship *B = (struct battleship *)malloc(sizeof(struct battleship));
+	strcpy(B->name, name);
+	B->length = size;
+	return B;
+}
+struct cruiser *create_cruiser (char *name, int size) {
+	struct cruiser *C = (struct cruiser *)malloc(sizeof(struct cruiser));
+	strcpy(C->name, name);
+	C->length = size;
+	return C;
+}
+struct submarine *create_submarine (char *name, int size) {
+	struct submarine *S = (struct submarine *)malloc(sizeof(struct submarine));
+	strcpy(S->name, name);
+	S->length = size;
+	return S;
+}
+struct destroyer *create_destroyer (char *name, int size) {
+	struct destroyer *D = (struct destroyer *)malloc(sizeof(struct destroyer));
+	strcpy(D->name, name);
+	D->length = size;
+	return D;
 }
 
 int main() {
 
-	struct aircraft A;
-	struct battleship B;
-  struct cruiser C;
-	struct submarine S;
-	struct destroyer D;
+	struct aircraft *A = create_aircraft("A", 5);
+	struct battleship *B = create_battleship("B", 4);
+	struct cruiser *C = create_cruiser("C", 3);
+	struct submarine *S = create_submarine("S", 3);
+	struct destroyer *D = create_destroyer("D", 2);
 	
-	setup();
-	
-	printAircraft (A);
+	printf("Aircraft: %s, %d\n", A->name, A->length);
+	printf("Battleship: %s, %d\n", B->name, B->length);
+	printf("Cruiser: %s, %d\n", C->name, C->length);
+	printf("Submarine: %s, %d\n", S->name, S->length);
+	printf("Destroyer: %s, %d\n", D->name, D->length);
 	
 	display();
 
