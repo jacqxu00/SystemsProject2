@@ -1,9 +1,8 @@
 all: battleship.c
-	gcc -o run battleship.c
+	gcc -o battleship battleship.c
 
 run: all
-	./run
+	./battleship
 
-clean: 
-	rm run
-	rm a.out
+clean:
+	rm -rf battleship

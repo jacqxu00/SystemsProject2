@@ -1,14 +1,17 @@
 xuJ (kangY, chenW) -- 2017-12-21 11:01
-	finished most of DESIGN.txt 
-	
+	finished most of DESIGN.txt
+
 xuJ (kangY, chenW) -- 2017-12-22 11:09
 	finished DESIGN.txt and created a basic README.md
-	
+
 kangY -- 2017-12-22 11:20
 	added repo as submodule to enterprise & emailed Mr. DW about looking over DESIGN.txt early
 
 xuJ -- 2017-12-26 17:57
   added basics of display function, waiting for data structures for the rest
-				
+
 kangY -- 2017-12-26 10:45
 	debugged and fixed display function, created data structures for all ships
+
+xuJ -- 2017-12-27 22:56
+	added initialize_board, print_board, and display

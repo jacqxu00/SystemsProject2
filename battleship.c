@@ -1,18 +1,5 @@
 #include "battleship.h"
 
-void display() {
-
-    printf("\nYOUR BOARD:                OPPONENT BOARD:\n\n");
-    printf("  A B C D E F G H I J        A B C D E F G H I J\n");
-    
-    int i; 
-    for (i = 0; i < 10; i++) {
-        printf("%d ", i); //print row number
-        // print i-th line of txt file
-        printf("\n");
-    }
-}
-
 struct aircraft {
 	char name[256];
 	int length;
@@ -70,6 +57,37 @@ struct destroyer *create_destroyer (char *name, int size) {
 	return D;
 }
 
+void initialize_board(char board[10][10]) {
+  int i;
+  for (i = 0; i < 10; i++) {
+    memcpy(board[i],"..........",sizeof(".........."));
+  }
+}
+
+void print_board(char board[10][10]) {
+  int r;
+  for (r = 0; r < 10; r++) {
+    printf("%d ", r);
+    int c;
+    for (c = 0; c < 10; c++) {
+      printf("%c ", board[r][c]);
+    }
+    printf("\n");
+  }
+}
+
+void display(char h_board[10][10], char o_board[10][10]) {
+
+    printf("\nHOME TERRITORY:\n");
+    printf("  A B C D E F G H I J\n");
+    print_board(h_board);
+
+    printf("\nOPPONENT TERRITORY:\n");
+    printf("  A B C D E F G H I J\n");
+    print_board(o_board);
+
+}
+
 int main() {
 
 	struct aircraft *A = create_aircraft("A", 5);
@@ -77,13 +95,18 @@ int main() {
 	struct cruiser *C = create_cruiser("C", 3);
 	struct submarine *S = create_submarine("S", 3);
 	struct destroyer *D = create_destroyer("D", 2);
-	
+
+  char home[10][10];
+  char opponent[10][10];
+  initialize_board(home);
+  initialize_board(opponent);
+
 	printf("Aircraft: %s, %d\n", A->name, A->length);
 	printf("Battleship: %s, %d\n", B->name, B->length);
 	printf("Cruiser: %s, %d\n", C->name, C->length);
 	printf("Submarine: %s, %d\n", S->name, S->length);
 	printf("Destroyer: %s, %d\n", D->name, D->length);
-	
-	display();
+
+	display(home, opponent);
 
 }
