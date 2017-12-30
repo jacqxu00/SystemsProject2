@@ -56,7 +56,7 @@ Algorithms:
 				   edits structs and grid based on coordinates
 2. while loop for playing input: block when it's the other players turn
 				 print clear messages about whose turn it is
-	    			 edits stucts and grid based on player moves
+	    			 edits structs and grid based on player moves
 				 displays new board for both players
 3. ending conditions: when all ships on one board have sunken
 		      print win/loss messages for each player
