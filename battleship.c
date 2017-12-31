@@ -91,13 +91,12 @@ void display(char h_board[10][10], char o_board[10][10]) {
 void parse_placement(char * ship_p, char * col_p, int * row_p, char * dir_p){
   char buffer[256]; //should I limit it to 7 chars?
 
-  printf("\nSetup Phase: \nTo place a ship, enter the letter representing the ship, the letter representing the column, the digit representing the row, and the letter representing the direction, each separated by a space \nLeft: L \nRight: R \nUp: U \nDown: D \n\t For example: S A 0 D will place a submarine occupying A,0 A,1 A,2 \nEnter ship, column, row, and direction: ");
+  printf("\nSetup Phase: \n\nTo place a ship, enter the following, each separated by a space: \n1. the letter representing the ship \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3\n\tD: destroyer, size 2\n2. the letter representing the column\n3. the digit representing the row\n4. the letter representing the direction \n\tLeft: L \n\tRight: R \n\tUp: U \n\tDown: D \nFor example: S A 0 D will place a submarine occupying A,0 A,1 A,2 \n\nEnter ship, column, row, and direction: ");
   fgets(buffer, sizeof(buffer), stdin);
   *strchr(buffer, '\n') = 0;
   //for testing
   printf("Player Input: %s \n", buffer);
-
-
+	
 }
 
 int placement_valid(char ship, char col, int row, char dir){

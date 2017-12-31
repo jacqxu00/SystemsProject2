@@ -15,3 +15,9 @@ kangY -- 2017-12-26 10:45
 
 xuJ -- 2017-12-27 22:56
 	added initialize_board, print_board, and display
+	
+chenW -- 2017-12-
+	
+	
+kangY -- 2017-12-30 8:15
+	fixed format of text in the terminal
