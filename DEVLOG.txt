@@ -8,7 +8,7 @@ kangY -- 2017-12-22 11:20
 	added repo as submodule to enterprise & emailed Mr. DW about looking over DESIGN.txt early
 
 xuJ -- 2017-12-26 17:57
-  added basics of display function, waiting for data structures for the rest
+  	added basics of display function, waiting for data structures for the rest
 
 kangY -- 2017-12-26 10:45
 	debugged and fixed display function, created data structures for all ships
@@ -16,8 +16,12 @@ kangY -- 2017-12-26 10:45
 xuJ -- 2017-12-27 22:56
 	added initialize_board, print_board, and display
 	
-chenW -- 2017-12-
-	
+chenW -- 2017-12-28 23:06
+	added function headers for placement phase
 	
 kangY -- 2017-12-30 8:15
 	fixed format of text in the terminal
+
+chenW -- 2017-12-31 22:26
+	parsed input for ship placement phase
+	
