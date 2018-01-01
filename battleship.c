@@ -123,7 +123,7 @@ int placement_valid(char ship, char col, int row, char dir){
 }
 
 void place_ship(char ship, char col, int row, char dir){
-
+  
 }
 
 int main() {
