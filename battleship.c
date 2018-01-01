@@ -102,6 +102,22 @@ void parse_placement(char * ship_p, char * col_p, int * row_p, char * dir_p){
 
 int placement_valid(char ship, char col, int row, char dir){
   //catch possible out-of-bound or overlapping errors
+  //invalid char for ship or dir
+
+  if(ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D'){
+    printf("Invalid ship \n");
+    return 0;
+  }
+  if(dir != 'L' && dir != 'R' && dir != 'U' && dir != 'D'){
+    printf("Invalid direction \n");
+    return 0;
+  }
+
+  //ship placed
+
+  
+
+  //any of ship's coordinates out-of-bounds or overlapping placed ship
 
   return 1;
 }
