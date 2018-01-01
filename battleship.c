@@ -106,6 +106,10 @@ int placement_valid(char ship, char col, int row, char dir){
   return 1;
 }
 
+void place_ship(char ship, char col, int row, char dir){
+
+}
+
 int main() {
 
   //setup
@@ -127,20 +131,26 @@ int main() {
   printf("Submarine: %c, %d\n", S->name, S->length);
   printf("Destroyer: %c, %d\n", D->name, D->length);
 
-  display(home, opponent);
-
-  //receive input (will eventually be in a loop until all ships placed)
+  //placement phase 
 
   char ship;
   char col;
   int row;
   char dir;
+  int ships_placed = 0;
 
-  parse_placement(&ship, &col, &row, &dir);
-  printf("Parsed Input: \n\tship: %c \n\tcol: %c \n\trow: %d \n\tdir: %c \n", ship, col, row, dir);
-  if(placement_valid(ship, col, row, dir)){
-
+  while(ships_placed < 5){
+    display(home, opponent);
+    parse_placement(&ship, &col, &row, &dir);
+    //for testing
+    printf("Parsed Input: \n\tship: %c \n\tcol: %c \n\trow: %d \n\tdir: %c \n", ship, col, row, dir);
+    if(placement_valid(ship, col, row, dir)){
+      place_ship(ship, col, row, dir);
+      ships_placed++;
+    }
   }
+
+  //playing phase
 
   return 0;
 }
