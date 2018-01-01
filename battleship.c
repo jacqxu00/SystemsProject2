@@ -96,6 +96,7 @@ void parse_placement(char * ship_p, char * col_p, int * row_p, char * dir_p){
   *strchr(buffer, '\n') = 0;
   //for testing
   printf("Player Input: %s \n", buffer);
+  sscanf(buffer, "%c %c %d %c", ship_p, col_p, row_p, dir_p);
 	
 }
 
@@ -136,6 +137,7 @@ int main() {
   char dir;
 
   parse_placement(&ship, &col, &row, &dir);
+  printf("Parsed Input: \n\tship: %c \n\tcol: %c \n\trow: %d \n\tdir: %c \n", ship, col, row, dir);
   if(placement_valid(ship, col, row, dir)){
 
   }
