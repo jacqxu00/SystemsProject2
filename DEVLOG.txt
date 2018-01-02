@@ -25,3 +25,9 @@ kangY -- 2017-12-30 8:15
 chenW -- 2017-12-31 22:26
 	parsed input for ship placement phase and added placement phase loop 
 	
+xuJ -- 2018-01-02
+
+	
+kangY -- 2018-01-02 2:35
+	worked on placement_valid function, specifically if col and row were valid
+	

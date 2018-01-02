@@ -95,7 +95,7 @@ void parse_placement(char * ship_p, char * col_p, int * row_p, char * dir_p){
   fgets(buffer, sizeof(buffer), stdin);
   *strchr(buffer, '\n') = 0;
   //for testing
-  printf("Player Input: %s \n", buffer);
+  printf("\nPlayer Input: %s \n", buffer);
   sscanf(buffer, "%c %c %d %c", ship_p, col_p, row_p, dir_p);
 
   //FIX if there are less than or greater than 4 inputs
@@ -104,16 +104,26 @@ void parse_placement(char * ship_p, char * col_p, int * row_p, char * dir_p){
 
 int placement_valid(char ship, char col, int row, char dir){
   //FIX catch possible out-of-bound or overlapping errors
-  //FIX invalid char for ship or dir
   //FIX ship already placed
-  //FIX column and row must be valid as well
 
+	// invalid char for ship
   if(ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D'){
-    printf("Invalid ship \n");
+    printf("\nInvalid ship, please try again. \n");
     return 0;
   }
+	// invalid char for dir
   if(dir != 'L' && dir != 'R' && dir != 'U' && dir != 'D'){
-    printf("Invalid direction \n");
+    printf("\nInvalid direction, please try again. \n");
+    return 0;
+  }
+	// invalid char for column
+  if(col != 'A' && col != 'B' && col != 'C' && col!= 'D' && col!= 'E' && col!= 'F' && col!= 'G' && col!= 'H' && col!= 'I' && col!= 'J'){
+    printf("\nInvalid column, please try again. \n");
+    return 0;
+  }
+	// invalid int for row
+  if(row != 0 && row != 1 && row != 2 && row != 3 && row != 4 && row != 5 && row != 6 && row != 7 && row != 8 && row != 9){
+    printf("\nInvalid row, please try again. \n");
     return 0;
   }
 
@@ -160,6 +170,7 @@ int main() {
     printf("Parsed Input: \n\tship: %c \n\tcol: %c \n\trow: %d \n\tdir: %c \n", ship, col, row, dir);
     if(placement_valid(ship, col, row, dir)){
       place_ship(ship, col, row, dir);
+			printf("\nSuccesful placement!\n");
       ships_placed++;
     }
   }
