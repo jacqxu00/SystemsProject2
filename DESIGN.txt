@@ -32,7 +32,7 @@ We are using networking between two computers. We will use semaphores to control
 
 Role Assignment:
 	Jackie:
-	- display
+	- changing files & display
 	Yedoh:
 	- receive & store user input
 	Winnie:
@@ -60,6 +60,11 @@ Algorithms:
 				 displays new board for both players
 3. ending conditions: when all ships on one board have sunken
 		      print win/loss messages for each player
+
+Bonus:
+1. change data point enter into one "word": A0 instead of A 0
+2. change data input to work with lowercase letters
+3. change display so home and opponent are side by side
 
 Timeline:
 	12.26.17: set up program files (.h, .c, makefile)

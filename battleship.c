@@ -89,7 +89,7 @@ void display(char h_board[10][10], char o_board[10][10]) {
 }
 
 void parse_placement(char * ship_p, char * col_p, int * row_p, char * dir_p){
-  char buffer[256]; //should I limit it to 7 chars?
+  char buffer[256]; //should I change this to 7 chars only?
 
   printf("\nSetup Phase: \n\nTo place a ship, enter the following, each separated by a space: \n1. the letter representing the ship \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3\n\tD: destroyer, size 2\n2. the letter representing the column\n3. the digit representing the row\n4. the letter representing the direction \n\tLeft: L \n\tRight: R \n\tUp: U \n\tDown: D \nFor example: S A 0 D will place a submarine occupying A,0 A,1 A,2 \n\nEnter ship, column, row, and direction: ");
   fgets(buffer, sizeof(buffer), stdin);
@@ -97,12 +97,16 @@ void parse_placement(char * ship_p, char * col_p, int * row_p, char * dir_p){
   //for testing
   printf("Player Input: %s \n", buffer);
   sscanf(buffer, "%c %c %d %c", ship_p, col_p, row_p, dir_p);
-	
+
+  //FIX if there are less than or greater than 4 inputs
+
 }
 
 int placement_valid(char ship, char col, int row, char dir){
-  //catch possible out-of-bound or overlapping errors
-  //invalid char for ship or dir
+  //FIX catch possible out-of-bound or overlapping errors
+  //FIX invalid char for ship or dir
+  //FIX ship already placed
+  //FIX column and row must be valid as well
 
   if(ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D'){
     printf("Invalid ship \n");
@@ -113,17 +117,11 @@ int placement_valid(char ship, char col, int row, char dir){
     return 0;
   }
 
-  //ship placed
-
-  
-
-  //any of ship's coordinates out-of-bounds or overlapping placed ship
-
   return 1;
 }
 
 void place_ship(char ship, char col, int row, char dir){
-  
+  //FIX
 }
 
 int main() {
@@ -147,7 +145,7 @@ int main() {
   printf("Submarine: %c, %d\n", S->name, S->length);
   printf("Destroyer: %c, %d\n", D->name, D->length);
 
-  //placement phase 
+  //placement phase
 
   char ship;
   char col;
