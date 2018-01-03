@@ -28,5 +28,6 @@ chenW -- 2017-12-31 22:26
 kangY -- 2018-01-02 2:35
 	worked on placement_valid function, specifically if col and row were valid
 
-xuJ -- 2018-01-03 10:49
+xuJ -- 2018-01-03 11:12
 	finished place_ship and tested, but the error testing has not been implemented yet
+	added encrypt_board which be used for opponent board
