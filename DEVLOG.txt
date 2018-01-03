@@ -15,19 +15,18 @@ kangY -- 2017-12-26 10:45
 
 xuJ -- 2017-12-27 22:56
 	added initialize_board, print_board, and display
-	
+
 chenW -- 2017-12-28 23:06
 	added function headers for placement phase
-	
+
 kangY -- 2017-12-30 8:15
 	fixed format of text in the terminal
 
 chenW -- 2017-12-31 22:26
-	parsed input for ship placement phase and added placement phase loop 
-	
-xuJ -- 2018-01-02
+	parsed input for ship placement phase and added placement phase loop
 
-	
 kangY -- 2018-01-02 2:35
 	worked on placement_valid function, specifically if col and row were valid
-	
+
+xuJ -- 2018-01-03 10:49
+	finished place_ship and tested, but the error testing has not been implemented yet

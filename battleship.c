@@ -130,8 +130,42 @@ int placement_valid(char ship, char col, int row, char dir){
   return 1;
 }
 
-void place_ship(char ship, char col, int row, char dir){
-  //FIX
+void place_ship(char ship, char col, int row, char dir, char board[10][10]){
+
+  //set up direction
+  int x, y;
+  if (dir == 'L') {
+    x = -1; y = 0;
+  }
+  else if (dir == 'R') {
+    x = 1; y = 0;
+  }
+  else if (dir == 'U') {
+    x = 0; y = 1;
+  }
+  else {
+    x = 0; y = -1;
+  }
+
+  //set up ship length
+  int len;
+  if (ship == 'A') {len = 5;}
+  else if (ship == 'B') {len = 4;}
+  else if (ship == 'C' || ship == 'S') {len = 3;}
+  else {len = 2;}
+
+  //set up row and col
+  int c = col - 'A';
+  int r = row;
+
+  //changing variables in char**
+  while (len) {
+    board[r][c] = ship;
+    r = r+y;
+    c = c+x;
+    len--;
+  }
+
 }
 
 int main() {
@@ -156,7 +190,6 @@ int main() {
   printf("Destroyer: %c, %d\n", D->name, D->length);
 
   //placement phase
-
   char ship;
   char col;
   int row;
@@ -169,7 +202,7 @@ int main() {
     //for testing
     printf("Parsed Input: \n\tship: %c \n\tcol: %c \n\trow: %d \n\tdir: %c \n", ship, col, row, dir);
     if(placement_valid(ship, col, row, dir)){
-      place_ship(ship, col, row, dir);
+      place_ship(ship, col, row, dir, home);
 			printf("\nSuccesful placement!\n");
       ships_placed++;
     }
