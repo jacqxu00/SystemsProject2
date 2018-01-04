@@ -43,7 +43,7 @@ void display(char h_board[10][10], char o_board[10][10]) {
 
 }
 
-int placement_valid(char ship, char col, char row, char dir, char shipP[256]){
+int placement_valid(char ship, char col, char row, char dir, char board [10][10], char shipP[256]){
 
   // invalid char for ship
   if(ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D'){
@@ -66,8 +66,75 @@ int placement_valid(char ship, char col, char row, char dir, char shipP[256]){
     return 0;
   }
 
-  //FIX catch possible out-of-bound or overlapping errors
+  //overlapping errors
+  //set up direction
+  int x, y;
+  if (dir == 'L') {
+    x = -1; y = 0;
+  }
+  else if (dir == 'R') {
+    x = 1; y = 0;
+  }
+  else if (dir == 'U') {
+    x = 0; y = -1;
+  }
+  else {
+    x = 0; y = 1;
+  }
 
+  //set up ship length
+  int len;
+  if (ship == 'A') {len = 5;}
+  else if (ship == 'B') {len = 4;}
+  else if (ship == 'C' || ship == 'S') {len = 3;}
+  else {len = 2;}
+
+  //set up row and col
+  int c = col - 'A';
+  int r = row - '0';
+
+  //changing variables in char**
+  while (len) {
+		if (board[r][c] != '.') {
+			printf("\nOverlapping error, please try again.\n");
+			return 0;
+		}
+    r = r+y;
+    c = c+x;
+    len--;
+  }
+	
+	//out-of-bound
+  //set up row and col
+  c = col - 'A';
+  r = row - '0';
+	
+	// set up direction
+  if (dir == 'L') {
+		if (!(c - (len - 1) >= 0)) {
+			printf("\nOut-of-bounds, please try again.\n");
+			return 0;
+		}
+  }
+  else if (dir == 'R') {
+		if (!(c + (len - 1) <= 9)) {
+			printf("\nOut-of-bounds, please try again.\n");
+			return 0;
+		}
+  }
+  else if (dir == 'U') {
+		if (!(r - (len - 1) >= 0)) {
+			printf("\nOut-of-bounds, please try again.\n");
+			return 0;
+		}
+  }
+  else {
+		if (!(r + (len - 1) <= 9)) {
+			printf("\nOut-of-bounds, please try again.\n");
+			return 0;
+		}
+  }
+	
   // ship already placed
 	if (ship == shipP[0] || ship == shipP[1] || ship == shipP[2] || ship == shipP[3] || ship == shipP[4]) {
 		printf("\nShip already placed, please input another ship. \n");
@@ -77,7 +144,7 @@ int placement_valid(char ship, char col, char row, char dir, char shipP[256]){
   return 1;
 }
 
-int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, char shipP[256]){
+int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, char board[10][10], char shipP[256]){
   char buffer[256]; 
 
   printf("\nSetup Phase: \n\nTo place a ship, enter the following, each separated by a space: \n1. the letter representing the ship \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter representing the column \n3. the digit representing the row \n4. the letter representing the direction \n\tLeft: L \n\tRight: R \n\tUp: U \n\tDown: D \nFor example: S A 0 D will place a submarine occupying A,0 A,1 A,2");
@@ -104,7 +171,7 @@ int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, cha
     return 0;
   }
 
-  return placement_valid(*ship_p, *col_p, *row_p, *dir_p, shipP);
+  return placement_valid(*ship_p, *col_p, *row_p, *dir_p, board, shipP);
 }
 
 void place_ship(char ship, char col, char row, char dir, char board[10][10], char shipP[256]){
@@ -182,7 +249,7 @@ int main() {
 
   while(ships_placed < 5){
     display(home, opponent);
-    while(!parse_placement(&ship, &col, &row, &dir, shipPlace)){
+    while(!parse_placement(&ship, &col, &row, &dir, home, shipPlace)){
       
     }
     //if(placement_valid(ship, col, row, dir)){

@@ -37,3 +37,9 @@ chenW -- 2018-01-03 22:37
 	fixed token check for parse_placement
 	rearranged function calls in placement phase loop
 	
+kangY -- 2018-01-04 00:15
+	changed formatting characters (chenW's request)
+	debugged and fixed up/down regarding placement (xuJ's request)
+	finished placement_valid (checked if ships were already placed, and for any overlapping and/or out-of-bound errors)
+	printed out ships that were already placed
+	
