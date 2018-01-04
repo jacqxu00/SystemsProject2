@@ -31,3 +31,9 @@ kangY -- 2018-01-02 2:35
 xuJ -- 2018-01-03 11:12
 	finished place_ship and tested, but the error testing has not been implemented yet
 	added encrypt_board which be used for opponent board
+
+chenW -- 2018-01-03 22:37
+	changed row variable from int to char and adjusted program accordingly
+	fixed token check for parse_placement
+	rearranged function calls in placement phase loop
+	
