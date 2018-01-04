@@ -20,7 +20,7 @@ void print_board(char board[10][10]) {
 }
 
 void encrypt_board(char board[10][10]) {
-  int r;
+  int r, c;
   for (r = 0; r < 10; r++) {
     for (c = 0; c < 10; c++) {
       char c = board[r][c] - 'A';
