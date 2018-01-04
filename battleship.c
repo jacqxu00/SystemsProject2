@@ -43,49 +43,58 @@ void display(char h_board[10][10], char o_board[10][10]) {
 
 }
 
-void parse_placement(char * ship_p, char * col_p, int * row_p, char * dir_p){
-  char buffer[256]; //should I change this to 7 chars only?
+int placement_valid(char ship, char col, char row, char dir){
 
-  printf("\nSetup Phase: \n\nTo place a ship, enter the following, each separated by a space: \n1. the letter representing the ship \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3\n\tD: destroyer, size 2\n2. the letter representing the column\n3. the digit representing the row\n4. the letter representing the direction \n\tLeft: L \n\tRight: R \n\tUp: U \n\tDown: D \nFor example: S A 0 D will place a submarine occupying A,0 A,1 A,2 \n\nEnter ship, column, row, and direction: ");
-  fgets(buffer, sizeof(buffer), stdin);
-  *strchr(buffer, '\n') = 0;
-  //for testing
-  printf("\nPlayer Input: %s \n", buffer);
-  sscanf(buffer, "%c %c %d %c", ship_p, col_p, row_p, dir_p);
-
-  //FIX if there are less than or greater than 4 inputs
-
-}
-
-int placement_valid(char ship, char col, int row, char dir){
-  //FIX catch possible out-of-bound or overlapping errors
-  //FIX ship already placed
-
-	// invalid char for ship
+  // invalid char for ship
   if(ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D'){
     printf("\nInvalid ship, please try again. \n");
     return 0;
   }
-	// invalid char for dir
+  // invalid char for column
+  if(col < 'A' || col > 'J'){
+    printf("\nInvalid column, please try again. \n");
+    return 0;
+  }
+  // invalid int for row
+  if(row < '0' || row > '9'){
+    printf("\nInvalid row, please try again. \n");
+    return 0;
+  }
+  // invalid char for dir
   if(dir != 'L' && dir != 'R' && dir != 'U' && dir != 'D'){
     printf("\nInvalid direction, please try again. \n");
     return 0;
   }
-	// invalid char for column
-  if(col != 'A' && col != 'B' && col != 'C' && col!= 'D' && col!= 'E' && col!= 'F' && col!= 'G' && col!= 'H' && col!= 'I' && col!= 'J'){
-    printf("\nInvalid column, please try again. \n");
-    return 0;
-  }
-	// invalid int for row
-  if(row != 0 && row != 1 && row != 2 && row != 3 && row != 4 && row != 5 && row != 6 && row != 7 && row != 8 && row != 9){
-    printf("\nInvalid row, please try again. \n");
-    return 0;
-  }
+
+  //FIX catch possible out-of-bound or overlapping errors
+
+  //FIX ship already placed
 
   return 1;
 }
 
-void place_ship(char ship, char col, int row, char dir, char board[10][10]){
+int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p){
+  char buffer[256]; 
+
+  printf("\nSetup Phase: \n\nTo place a ship, enter the following, each separated by a space: \n1. the letter representing the ship \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter representing the column \n3. the digit representing the row \n4. the letter representing the direction \n\tLeft: L \n\tRight: R \n\tUp: U \n\tDown: D \nFor example: S A 0 D will place a submarine occupying A,0 A,1 A,2 \n\nEnter ship, column, row, and direction: ");
+  fgets(buffer, sizeof(buffer), stdin);
+  *strchr(buffer, '\n') = 0;
+  //for testing
+  printf("\nPlayer Input: %s \n", buffer);
+  int scanned = sscanf(buffer, "%c %c %c %c", ship_p, col_p, row_p, dir_p); //won't make use of extra tokens
+  //for testing
+  printf("Parsed Input: \n\tship: %c \n\tcol: %c \n\trow: %d \n\tdir: %c \n", *ship_p, *col_p, *row_p, *dir_p);
+
+  //FIX if there are < or > 4 inputs
+  if(scanned < 4){ 
+    printf("Missing one or more instructions, please try again. \n");
+    return 0;
+  }
+
+  return placement_valid(*ship_p, *col_p, *row_p, *dir_p);
+}
+
+void place_ship(char ship, char col, char row, char dir, char board[10][10]){
 
   //set up direction
   int x, y;
@@ -111,7 +120,7 @@ void place_ship(char ship, char col, int row, char dir, char board[10][10]){
 
   //set up row and col
   int c = col - 'A';
-  int r = row;
+  int r = row - '0';
 
   //changing variables in char**
   while (len) {
@@ -146,20 +155,20 @@ int main() {
   //placement phase
   char ship;
   char col;
-  int row;
+  char row;
   char dir;
   int ships_placed = 0;
 
   while(ships_placed < 5){
     display(home, opponent);
-    parse_placement(&ship, &col, &row, &dir);
-    //for testing
-    printf("Parsed Input: \n\tship: %c \n\tcol: %c \n\trow: %d \n\tdir: %c \n", ship, col, row, dir);
-    if(placement_valid(ship, col, row, dir)){
-      place_ship(ship, col, row, dir, home);
-			printf("\nSuccesful placement!\n");
-      ships_placed++;
+    while(!parse_placement(&ship, &col, &row, &dir)){
+      
     }
+    //if(placement_valid(ship, col, row, dir)){
+    place_ship(ship, col, row, dir, home);
+    printf("\nSuccesful placement!\n");
+    ships_placed++;
+    //}
   }
 
   //playing phase
