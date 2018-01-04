@@ -43,7 +43,7 @@ void display(char h_board[10][10], char o_board[10][10]) {
 
 }
 
-int placement_valid(char ship, char col, char row, char dir){
+int placement_valid(char ship, char col, char row, char dir, char shipP[256]){
 
   // invalid char for ship
   if(ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D'){
@@ -68,12 +68,16 @@ int placement_valid(char ship, char col, char row, char dir){
 
   //FIX catch possible out-of-bound or overlapping errors
 
-  //FIX ship already placed
+  // ship already placed
+	if (ship == shipP[0] || ship == shipP[1] || ship == shipP[2] || ship == shipP[3] || ship == shipP[4]) {
+		printf("\nShip already placed, please input another ship. \n");
+		return 0;
+	}
 
   return 1;
 }
 
-int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, char shipP[6]){
+int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, char shipP[256]){
   char buffer[256]; 
 
   printf("\nSetup Phase: \n\nTo place a ship, enter the following, each separated by a space: \n1. the letter representing the ship \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter representing the column \n3. the digit representing the row \n4. the letter representing the direction \n\tLeft: L \n\tRight: R \n\tUp: U \n\tDown: D \nFor example: S A 0 D will place a submarine occupying A,0 A,1 A,2");
@@ -81,8 +85,8 @@ int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, cha
 	// print out placed ships
 	printf("\n\nShips already placed: ");
 	int i;
-  for (i = 0; i < 6; i++) {
-    printf("%s ", shipP[i]);
+  for (i = 0; i < 5; i++) {
+    printf("%c ", shipP[i]);
   }
 	
 	printf("\n\nEnter ship, column, row, and direction: ");
@@ -92,18 +96,18 @@ int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, cha
   printf("\nPlayer Input: %s \n", buffer);
   int scanned = sscanf(buffer, "%c %c %c %c", ship_p, col_p, row_p, dir_p); //won't make use of extra tokens
   //for testing
-  printf("\nParsed Input: \n\tship: %c \n\tcol: %c \n\trow: %d \n\tdir: %c \n", *ship_p, *col_p, *row_p, *dir_p);
-
+  printf("\nParsed Input: \n\tship: %c \n\tcol: %c \n\trow: %c \n\tdir: %c \n", *ship_p, *col_p, *row_p, *dir_p);
+	
   //FIX if there are < or > 4 inputs
   if(scanned < 4){ 
     printf("\nMissing one or more instructions, please try again. \n");
     return 0;
   }
 
-  return placement_valid(*ship_p, *col_p, *row_p, *dir_p);
+  return placement_valid(*ship_p, *col_p, *row_p, *dir_p, shipP);
 }
 
-void place_ship(char ship, char col, char row, char dir, char board[10][10], char shipP[6]){
+void place_ship(char ship, char col, char row, char dir, char board[10][10], char shipP[256]){
 
   //set up direction
   int x, y;
@@ -114,10 +118,10 @@ void place_ship(char ship, char col, char row, char dir, char board[10][10], cha
     x = 1; y = 0;
   }
   else if (dir == 'U') {
-    x = 0; y = 1;
+    x = 0; y = -1;
   }
   else {
-    x = 0; y = -1;
+    x = 0; y = 1;
   }
 
   //set up ship length
@@ -159,7 +163,7 @@ int main() {
 
   char home[10][10];
   char opponent[10][10];
-	char shipPlace[6];
+	char shipPlace[256];
   initialize_board(home);
   initialize_board(opponent);
 
