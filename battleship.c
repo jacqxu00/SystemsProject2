@@ -205,14 +205,15 @@ void place_ship(char ship, char col, char row, char dir, char board[10][10], cha
 
 }
 
-bool player_loss(char board[10][10]) {
-  int ans = true;
+int player_loss(char board[10][10]) {
+  int ans = 1;
   int r;
   for (r = 0; r < 10; r++) {
     int c;
     for (c = 0; c < 10; c++) {
-      bool good = board[r][c] == '.' || board[r][c] == '*';
-      ans = ans && good;
+      if (!(board[r][c] == '.' || board[r][c] == '*')) {
+        ans = 0;
+      }
     }
   }
   return ans;
@@ -222,6 +223,19 @@ int game_over(char hom[10][10], char opp[10][10]) {
   if (player_loss(hom)) {return 1;}
   else if (player_loss(opp)) {return 2;}
   else {return 0;}
+}
+
+void attack(char ** send, char * receive) {
+  int r;
+  int c;
+    //char *charArray = (char *) array;
+
+    //for( j = 0; j < SIZE; j++ ){
+    //    for( i = 0; i < SIZE; i ++){
+    //        printf( "%c ", charArray[j*SIZE + i] );
+    //    }
+    //    printf( "\n" );
+    //}
 }
 
 int main() {
@@ -257,11 +271,11 @@ int main() {
     while(!parse_placement(&ship, &col, &row, &dir, home, shipPlace)){
 
     }
-    if(placement_valid(ship, col, row, dir)){
+    //if(placement_valid(ship, col, row, dir, shipPlace)){
       place_ship(ship, col, row, dir, home, shipPlace);
       printf("\nSuccesful placement!\n");
       ships_placed++;
-    }
+    //}
   }
 
   //playing phase
@@ -269,9 +283,9 @@ int main() {
 
   }
 
-  //game us over
+  //game over
   if (game_over(home, opponent) == 1) {
-    printf("GAME OVER! You've lost.");
+    printf("GAME OVER. You've lost.");
   }
   else if (game_over(home, opponent) == 2) {
     printf("CONGRATULATIONS! You've won!");
