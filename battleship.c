@@ -5,6 +5,7 @@ void initialize_board(char board[10][10]) {
   for (i = 0; i < 10; i++) {
     memcpy(board[i],"..........",sizeof(".........."));
   }
+  //return board;
 }
 
 void print_board(char board[10][10]) {
@@ -39,7 +40,7 @@ void display(char hom[10][10], char opp[10][10]) {
 
   printf("\nOPPONENT TERRITORY:\n");
   printf("  A B C D E F G H I J\n");
-  print_board(opp);
+  print_board(opp); //use the encrypted version of opp
 
 }
 
@@ -88,51 +89,51 @@ int placement_valid(char ship, char col, char row, char dir, char board[10][10],
 
   //changing variables in char**
   while (len) {
-		if (board[r][c] != '.') {
-			printf("\nOverlapping error, please try again.\n");
-			return 0;
-		}
+    if (board[r][c] != '.') {
+      printf("\nOverlapping error, please try again.\n");
+      return 0;
+    }
     r = r+y;
     c = c+x;
     len--;
   }
 
-	//out-of-bound
+  //out-of-bound
   //set up row and col
   c = col - 'A';
   r = row - '0';
 
-	// set up direction
+  // set up direction
   if (dir == 'L') {
-		if (!(c - (len - 1) >= 0)) {
-			printf("\nOut-of-bounds, please try again.\n");
-			return 0;
-		}
+    if (!(c - (len - 1) >= 0)) {
+      printf("\nOut-of-bounds, please try again.\n");
+      return 0;
+    }
   }
   else if (dir == 'R') {
-		if (!(c + (len - 1) <= 9)) {
-			printf("\nOut-of-bounds, please try again.\n");
-			return 0;
-		}
+    if (!(c + (len - 1) <= 9)) {
+      printf("\nOut-of-bounds, please try again.\n");
+      return 0;
+    }
   }
   else if (dir == 'U') {
-		if (!(r - (len - 1) >= 0)) {
-			printf("\nOut-of-bounds, please try again.\n");
-			return 0;
-		}
+    if (!(r - (len - 1) >= 0)) {
+      printf("\nOut-of-bounds, please try again.\n");
+      return 0;
+    }
   }
   else {
-		if (!(r + (len - 1) <= 9)) {
-			printf("\nOut-of-bounds, please try again.\n");
-			return 0;
-		}
+    if (!(r + (len - 1) <= 9)) {
+      printf("\nOut-of-bounds, please try again.\n");
+      return 0;
+    }
   }
 
   // ship already placed
-	if (ship == shipP[0] || ship == shipP[1] || ship == shipP[2] || ship == shipP[3] || ship == shipP[4]) {
-		printf("\nShip already placed, please input another ship. \n");
-		return 0;
-	}
+  if (ship == shipP[0] || ship == shipP[1] || ship == shipP[2] || ship == shipP[3] || ship == shipP[4]) {
+    printf("\nShip already placed, please input another ship. \n");
+    return 0;
+  }
 
   return 1;
 }
@@ -142,14 +143,14 @@ int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, cha
 
   printf("\nSetup Phase: \n\nTo place a ship, enter the following, each separated by a space: \n1. the letter representing the ship \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter representing the column \n3. the digit representing the row \n4. the letter representing the direction \n\tLeft: L \n\tRight: R \n\tUp: U \n\tDown: D \nFor example: S A 0 D will place a submarine occupying A,0 A,1 A,2");
 
-	// print out placed ships
-	printf("\n\nShips already placed: ");
-	int i;
+  // print out placed ships
+  printf("\n\nShips already placed: ");
+  int i;
   for (i = 0; i < 5; i++) {
     printf("%c ", shipP[i]);
   }
 
-	printf("\n\nEnter ship, column, row, and direction: ");
+  printf("\n\nEnter ship, column, row, and direction: ");
   fgets(buffer, sizeof(buffer), stdin);
   *strchr(buffer, '\n') = 0;
   //for testing
@@ -196,22 +197,23 @@ void place_ship(char ship, char col, char row, char dir, char board[10][10], cha
     len--;
   }
 
-	//adding ship to char array of placed ships
+  //adding ship to char array of placed ships
   if (ship == 'A') {shipP[0] = 'A';}
   else if (ship == 'B') {shipP[1] = 'B';}
-	else if (ship == 'C') {shipP[2] = 'C';}
+  else if (ship == 'C') {shipP[2] = 'C';}
   else if (ship == 'S') {shipP[3] = 'S';}
   else {shipP[4] = 'D';}
 
 }
 
-int player_loss(char board[10][10]) {
+int player_loss(char board[10][10]) { 
   int ans = 1;
   int r;
   for (r = 0; r < 10; r++) {
     int c;
     for (c = 0; c < 10; c++) {
-      if (!(board[r][c] == '.' || board[r][c] == '*')) {
+      if (!(board[r][c] == '.' || board[r][c] == '*' || board[r][c] == 'H')) { 
+	//i.e. if this board still has surviving ships, then it is this player's win
         ans = 0;
       }
     }
@@ -228,14 +230,14 @@ int game_over(char hom[10][10], char opp[10][10]) {
 void attack(char ** send, char * receive) {
   int r;
   int c;
-    //char *charArray = (char *) array;
+  //char *charArray = (char *) array;
 
-    //for( j = 0; j < SIZE; j++ ){
-    //    for( i = 0; i < SIZE; i ++){
-    //        printf( "%c ", charArray[j*SIZE + i] );
-    //    }
-    //    printf( "\n" );
-    //}
+  //for( j = 0; j < SIZE; j++ ){
+  //    for( i = 0; i < SIZE; i ++){
+  //        printf( "%c ", charArray[j*SIZE + i] );
+  //    }
+  //    printf( "\n" );
+  //}
 }
 
 int main() {
@@ -249,7 +251,7 @@ int main() {
 
   char home[10][10];
   char opponent[10][10];
-	char shipPlace[256];
+  char shipPlace[256] = "     ";
   initialize_board(home);
   initialize_board(opponent);
 
@@ -272,9 +274,9 @@ int main() {
 
     }
     //if(placement_valid(ship, col, row, dir, shipPlace)){
-      place_ship(ship, col, row, dir, home, shipPlace);
-      printf("\nSuccesful placement!\n");
-      ships_placed++;
+    place_ship(ship, col, row, dir, home, shipPlace);
+    printf("\nSuccesful placement!\n");
+    ships_placed++;
     //}
   }
 
