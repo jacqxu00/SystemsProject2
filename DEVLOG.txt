@@ -45,3 +45,7 @@ kangY -- 2018-01-04 00:15
 
 xuJ -- 2018-01-05 12:13
 	wrote the functions to test if game is over to start the game play
+
+xuJ -- 2018-01-05 14:14
+	wrote the attack function but it doesn't work because variable not pointer
+	fixed the encrypt_board to just print encrypted

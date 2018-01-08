@@ -20,15 +20,20 @@ void print_board(char board[10][10]) {
   }
 }
 
-void encrypt_board(char board[10][10]) {
-  int r, c;
+void print_encrypted(char board[10][10]) {
+  int r;
   for (r = 0; r < 10; r++) {
+    printf("%d ", r);
+    int c;
     for (c = 0; c < 10; c++) {
-      char c = board[r][c] - 'A';
-      if (c >= 0 && c <= 25) {
-        board[r][c] = '.';
+      if (c >= 0 && c <= 25 && c !=7) {
+        printf("%c ", '.');
+      }
+      else {
+        printf("%c ", board[r][c]);
       }
     }
+    printf("\n");
   }
 }
 
@@ -206,14 +211,14 @@ void place_ship(char ship, char col, char row, char dir, char board[10][10], cha
 
 }
 
-int player_loss(char board[10][10]) { 
+int player_loss(char board[10][10]) {
   int ans = 1;
   int r;
   for (r = 0; r < 10; r++) {
     int c;
     for (c = 0; c < 10; c++) {
-      if (!(board[r][c] == '.' || board[r][c] == '*' || board[r][c] == 'H')) { 
-	//i.e. if this board still has surviving ships, then it is this player's win
+      if (!(board[r][c] == '.' || board[r][c] == '*' || board[r][c] == 'H')) {
+	       //i.e. if this board still has surviving ships, then it is this player's win
         ans = 0;
       }
     }
@@ -227,17 +232,19 @@ int game_over(char hom[10][10], char opp[10][10]) {
   else {return 0;}
 }
 
-void attack(char ** send, char * receive) {
-  int r;
-  int c;
-  //char *charArray = (char *) array;
-
-  //for( j = 0; j < SIZE; j++ ){
-  //    for( i = 0; i < SIZE; i ++){
-  //        printf( "%c ", charArray[j*SIZE + i] );
-  //    }
-  //    printf( "\n" );
-  //}
+void attack(char receive[10][10], char row, char col) {
+  //incomplete
+  if (receive[r][c] == '.') {
+    receive[r][c] == '*';
+    printf("\nYou've missed. It is now your opponent's turn.\n");
+  }
+  else if (receive[r][c] == '*' || receive[r][c] == 'H') {
+    printf("\nYou've already entered this coordinate. Please try again.\n");
+  }
+  else {
+    receive[r][c] == 'H';
+    printf("\nYou've hit a ship! It is now your opponent's turn.\n");
+  }
 }
 
 int main() {
@@ -287,10 +294,10 @@ int main() {
 
   //game over
   if (game_over(home, opponent) == 1) {
-    printf("GAME OVER. You've lost.");
+    printf("\nGAME OVER. You've lost.\n");
   }
   else if (game_over(home, opponent) == 2) {
-    printf("CONGRATULATIONS! You've won!");
+    printf("\nCONGRATULATIONS! You've won!\n");
   }
 
   return 0;

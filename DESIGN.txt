@@ -53,13 +53,16 @@ Data Structures:
 
 Algorithms:
 1. after receiving ship placement: calculate all coordinates and prints error message if off board
-				   edits structs and grid based on coordinates
-2. while loop for playing input: block when it's the other players turn
-				 print clear messages about whose turn it is
-	    			 edits structs and grid based on player moves
-				 displays new board for both players
+					edits structs and grid based on coordinates
+					both players send their home boards so both players have each other's boards stored
+2. while loop for playing input: blocks when it's the other player's turn
+					other player sends info to current player (the coordinates of their move)
+					current player attack() function is used to change their own board
+					current player prints both boards
+			    current player enters a valid move and the attack() function is used to change opponent board
+					current player prints both boards again
 3. ending conditions: when all ships on one board have sunken
-		      print win/loss messages for each player
+					print win/loss messages for each player
 
 Bonus:
 1. change data point enter into one "word": A0 instead of A 0
