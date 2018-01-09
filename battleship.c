@@ -288,10 +288,9 @@ int main() {
   while(ships_placed < 5){
     display(home, opponent);
     while(!parse_placement(&ship, &col, &row, &dir, home, shipPlace)){
-
     }
-    display(home, opponent);
     place_ship(ship, col, row, dir, home, shipPlace);
+    display(home, opponent);
     printf("\nSuccesful placement!\n");
     ships_placed++;
   }
