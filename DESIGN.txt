@@ -13,10 +13,11 @@ will display.
 
 
 User Interface:
-Our game will be played in the shell. The home territory will be displayed on the left side, and the opponent’s territory
-will be displayed on the right. The grids will be 10x10; the columns will be labeled A-J, and the row labeled 0-9. For
-placing, player enters starting coordinate, type of ship (A, B, C, S, or D), and direction (L, R, U, D). If the ship goes
-off the screen, an error message will display. For hitting, player only enters a coordinate.
+Our game will be played in the shell. To start the game, the players will enter "battleship" followed by either 1 or 2, 
+depending on which player they are (player 1 or player 2). The home territory will be displayed on the left side, and the 
+opponent’s territory will be displayed on the right. The grids will be 10x10; the columns will be labeled A-J, and the row 
+labeled 0-9. For placing, player enters starting coordinate, type of ship (A, B, C, S, or D), and direction (L, R, U, D). If the 
+ship goes off the screen, an error message will display. For hitting, player only enters a coordinate.
 
 Symbols Used In Shell:
 	Both Home and Opponent:
