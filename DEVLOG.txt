@@ -45,7 +45,11 @@ kangY -- 2018-01-04 00:15
 
 xuJ -- 2018-01-05 12:13
 	wrote the functions to test if game is over to start the game play
-	
+
 kangY -- 2018-01-08 11:09
 	made char board[10][10] into a char **, making it dynamic
 	changed all the char board[10][10] to the char ** by using structs
+
+xuJ -- 2018-01-09 11:11
+	fixed the formatting so that the window will seem to "refresh" after every input
+	changed the grid to 8x8 (the board game version)

@@ -19,7 +19,7 @@ void initialize_board (struct board * home) {
 void print_board (struct board * home, struct board * opp, int row) {
 
   //print home board row
-  printf("    %d ", row);
+  printf("            %d ", row);
   int c;
   for (c = 0; c < home->cols; c++) {
     printf("%c ", home->board_[row][c]);
@@ -48,8 +48,8 @@ void print_board (struct board * home, struct board * opp, int row) {
 
 void display (struct board * home, struct board * opp) {
   pretty_spacing(30);
-  printf("\n    HOME TERRITORY:                 OPPONENT TERRITORY:\n");
-  printf("      A B C D E F G H                 A B C D E F G H\n");
+  printf("\n            HOME TERRITORY:             OPPONENT TERRITORY:\n");
+  printf("              A B C D E F G H             A B C D E F G H\n");
   int i;
   for (i = 0; i < 8; i++) {
     print_board(home, opp, i);
@@ -170,11 +170,9 @@ int parse_placement (char * ship_p, char * col_p, char * row_p, char * dir_p, st
   *strchr(buffer, '\n') = 0;
 
 	//for testing
-  printf("\nPlayer Input: %s \n", buffer);
+  //printf("\nPlayer Input: %s \n", buffer);
   int scanned = sscanf(buffer, "%c %c %c %c", ship_p, col_p, row_p, dir_p); //won't make use of extra tokens
-
-	//for testing
-  printf("\nParsed Input: \n\tship: %c \n\tcol: %c \n\trow: %c \n\tdir: %c \n", *ship_p, *col_p, *row_p, *dir_p);
+  //printf("\nParsed Input: \n\tship: %c \n\tcol: %c \n\trow: %c \n\tdir: %c \n", *ship_p, *col_p, *row_p, *dir_p);
 
   //FIX if there are < or > 4 inputs
   if (scanned < 4){
@@ -228,9 +226,9 @@ int player_loss (struct board * home) {
 
   int ans = 1;
   int r;
-  for (r = 0; r < 10; r++) {
+  for (r = 0; r < 8; r++) {
     int c;
-    for (c = 0; c < 10; c++) {
+    for (c = 0; c < 8; c++) {
       if (!(home->board_[r][c] == '.' || home->board_[r][c] == '*' || home->board_[r][c] == 'H')) {
         ans = 0;
       }
@@ -265,7 +263,7 @@ void attack (struct board * receive, char row, char col) {
 }
 
 int main() {
-  printf("\e[8;35;68;t");
+  printf("\e[8;33;68;t");
 
   //setup
   struct aircraft *A = create_aircraft('A', 5);
@@ -292,11 +290,10 @@ int main() {
     while(!parse_placement(&ship, &col, &row, &dir, home, shipPlace)){
 
     }
-    //if(placement_valid(ship, col, row, dir, shipPlace)){
+    display(home, opponent);
     place_ship(ship, col, row, dir, home, shipPlace);
     printf("\nSuccesful placement!\n");
     ships_placed++;
-    //}
   }
 
   //playing phase
