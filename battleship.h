@@ -29,6 +29,11 @@ struct destroyer {
   int length;
   char coor[256];
 };
+struct board {
+	int rows;
+	int cols;
+	char **board_;
+};
 
 struct aircraft *create_aircraft (char name, int size) {
   struct aircraft *A = (struct aircraft *)malloc(sizeof(struct aircraft));
@@ -59,6 +64,19 @@ struct destroyer *create_destroyer (char name, int size) {
   D->name = name;
   D->length = size;
   return D;
+}
+struct board *create_board (int rows, int cols) {
+	struct board *b = (struct board *)malloc(sizeof(struct board));
+	b->rows = rows;
+	b->cols = cols;
+	
+	char ** board_ = (char **)malloc(sizeof(char*) * rows);
+	for (int i = 0; i < rows; i++) {
+		board_[i] = (char *)malloc(sizeof(char) * cols);
+	}
+	b->board_ = board_;
+	
+	return b;
 }
 
 //function headers

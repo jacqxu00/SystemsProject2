@@ -1,26 +1,30 @@
 #include "battleship.h"
 
-void initialize_board(char board[10][10]) {
-  int i;
-  for (i = 0; i < 10; i++) {
-    memcpy(board[i],"..........",sizeof(".........."));
+void initialize_board (struct board * home) {
+	
+	int i, j;
+  for (i = 0; i < home->rows; i++) {
+		for (j = 0; j < home->cols; j++) {
+    	home->board_[i][j] = '.';
+		}
   }
-  //return board;
 }
 
-void print_board(char board[10][10]) {
+void print_board (struct board * home) {
+ 
   int r;
-  for (r = 0; r < 10; r++) {
+  for (r = 0; r < home->rows; r++) {
     printf("%d ", r);
     int c;
-    for (c = 0; c < 10; c++) {
-      printf("%c ", board[r][c]);
+    for (c = 0; c < home->cols; c++) {
+      printf("%c ", home->board_[r][c]);
     }
     printf("\n");
   }
 }
 
-void print_encrypted(char board[10][10]) {
+void print_encrypted (struct board * home) {
+ 
   int r;
   for (r = 0; r < 10; r++) {
     printf("%d ", r);
@@ -30,18 +34,18 @@ void print_encrypted(char board[10][10]) {
         printf("%c ", '.');
       }
       else {
-        printf("%c ", board[r][c]);
+        printf("%c ", home->board_[r][c]);
       }
     }
     printf("\n");
   }
 }
 
-void display(char hom[10][10], char opp[10][10]) {
+void display (struct board * home, struct board * opp) {
 
   printf("\nHOME TERRITORY:\n");
   printf("  A B C D E F G H I J\n");
-  print_board(hom);
+  print_board(home);
 
   printf("\nOPPONENT TERRITORY:\n");
   printf("  A B C D E F G H I J\n");
@@ -49,25 +53,25 @@ void display(char hom[10][10], char opp[10][10]) {
 
 }
 
-int placement_valid(char ship, char col, char row, char dir, char board[10][10], char shipP[256]){
+int placement_valid (char ship, char col, char row, char dir, struct board * home, char shipP[256]) {
 
   // invalid char for ship
-  if(ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D'){
+  if (ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D') {
     printf("\nInvalid ship, please try again. \n");
     return 0;
   }
   // invalid char for column
-  if(col < 'A' || col > 'J'){
+  if (col < 'A' || col > 'J') {
     printf("\nInvalid column, please try again. \n");
     return 0;
   }
   // invalid int for row
-  if(row < '0' || row > '9'){
+  if (row < '0' || row > '9') {
     printf("\nInvalid row, please try again. \n");
     return 0;
   }
   // invalid char for dir
-  if(dir != 'L' && dir != 'R' && dir != 'U' && dir != 'D'){
+  if (dir != 'L' && dir != 'R' && dir != 'U' && dir != 'D') {
     printf("\nInvalid direction, please try again. \n");
     return 0;
   }
@@ -94,7 +98,7 @@ int placement_valid(char ship, char col, char row, char dir, char board[10][10],
 
   //changing variables in char**
   while (len) {
-    if (board[r][c] != '.') {
+    if (home->board_[r][c] != '.') {
       printf("\nOverlapping error, please try again.\n");
       return 0;
     }
@@ -141,10 +145,12 @@ int placement_valid(char ship, char col, char row, char dir, char board[10][10],
   }
 
   return 1;
+
 }
 
-int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, char board[10][10], char shipP[256]){
-  char buffer[256];
+int parse_placement (char * ship_p, char * col_p, char * row_p, char * dir_p, struct board * home, char shipP[256]) {
+  
+	char buffer[256];
 
   printf("\nSetup Phase: \n\nTo place a ship, enter the following, each separated by a space: \n1. the letter representing the ship \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter representing the column \n3. the digit representing the row \n4. the letter representing the direction \n\tLeft: L \n\tRight: R \n\tUp: U \n\tDown: D \nFor example: S A 0 D will place a submarine occupying A,0 A,1 A,2");
 
@@ -158,22 +164,25 @@ int parse_placement(char * ship_p, char * col_p, char * row_p, char * dir_p, cha
   printf("\n\nEnter ship, column, row, and direction: ");
   fgets(buffer, sizeof(buffer), stdin);
   *strchr(buffer, '\n') = 0;
-  //for testing
+  
+	//for testing
   printf("\nPlayer Input: %s \n", buffer);
   int scanned = sscanf(buffer, "%c %c %c %c", ship_p, col_p, row_p, dir_p); //won't make use of extra tokens
-  //for testing
+  
+	//for testing
   printf("\nParsed Input: \n\tship: %c \n\tcol: %c \n\trow: %c \n\tdir: %c \n", *ship_p, *col_p, *row_p, *dir_p);
 
   //FIX if there are < or > 4 inputs
-  if(scanned < 4){
+  if (scanned < 4){
     printf("\nMissing one or more instructions, please try again. \n");
     return 0;
   }
 
-  return placement_valid(*ship_p, *col_p, *row_p, *dir_p, board, shipP);
+  return placement_valid(*ship_p, *col_p, *row_p, *dir_p, home, shipP);
+
 }
 
-void place_ship(char ship, char col, char row, char dir, char board[10][10], char shipP[256]){
+void place_ship (char ship, char col, char row, char dir, struct board * home, char shipP[256]){
 
   //set up direction
   int x = 0;
@@ -196,7 +205,7 @@ void place_ship(char ship, char col, char row, char dir, char board[10][10], cha
 
   //changing variables in char**
   while (len) {
-    board[r][c] = ship;
+    home->board_[r][c] = ship;
     r = r+y;
     c = c+x;
     len--;
@@ -211,38 +220,42 @@ void place_ship(char ship, char col, char row, char dir, char board[10][10], cha
 
 }
 
-int player_loss(char board[10][10]) {
+int player_loss (struct board * home) {
+
   int ans = 1;
   int r;
   for (r = 0; r < 10; r++) {
     int c;
     for (c = 0; c < 10; c++) {
-      if (!(board[r][c] == '.' || board[r][c] == '*' || board[r][c] == 'H')) {
+      if (!(home->board_[r][c] == '.' || home->board_[r][c] == '*' || home->board_[r][c] == 'H')) {
 	       //i.e. if this board still has surviving ships, then it is this player's win
         ans = 0;
       }
     }
   }
   return ans;
+	
 }
 
-int game_over(char hom[10][10], char opp[10][10]) {
-  if (player_loss(hom)) {return 1;}
+int game_over (struct board * home, struct board * opp) {
+
+  if (player_loss(home)) {return 1;}
   else if (player_loss(opp)) {return 2;}
   else {return 0;}
+	
 }
 
-void attack(char receive[10][10], char row, char col) {
+void attack (struct board * receive, char row, char col) {
   //incomplete
-  if (receive[r][c] == '.') {
-    receive[r][c] == '*';
+  if (receive->board_[row][col] == '.') {
+    receive->board_[row][col] = '*';
     printf("\nYou've missed. It is now your opponent's turn.\n");
   }
-  else if (receive[r][c] == '*' || receive[r][c] == 'H') {
+  else if (receive->board_[row][col] == '*' || receive->board_[row][col] == 'H') {
     printf("\nYou've already entered this coordinate. Please try again.\n");
   }
   else {
-    receive[r][c] == 'H';
+    receive->board_[row][col] = 'H';
     printf("\nYou've hit a ship! It is now your opponent's turn.\n");
   }
 }
@@ -256,8 +269,8 @@ int main() {
   struct submarine *S = create_submarine('S', 3);
   struct destroyer *D = create_destroyer('D', 2);
 
-  char home[10][10];
-  char opponent[10][10];
+  struct board *home = create_board(10, 10);
+  struct board *opponent = create_board(10, 10);
   char shipPlace[256] = "     ";
   initialize_board(home);
   initialize_board(opponent);
