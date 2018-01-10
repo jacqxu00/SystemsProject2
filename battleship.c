@@ -57,26 +57,30 @@ void display (struct board * home, struct board * opp) {
 
 }
 
-int placement_valid (char ship, char col, char row, char dir, struct board * home, char shipP[256]) {
+int placement_valid (char ship, char col, char row, char dir, struct board * home, struct board * opp, char shipP[256]) {
 
   // invalid char for ship
   if (ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D') {
-    printf("\nInvalid ship, please try again. \n");
+    display(home, opp);
+    printf("\nERROR: Invalid ship, please try again. \n");
     return 0;
   }
   // invalid char for column
   if (col < 'A' || col > 'H') {
-    printf("\nInvalid column, please try again. \n");
+    display(home, opp);
+    printf("\nERROR: Invalid column, please try again. \n");
     return 0;
   }
   // invalid int for row
   if (row < '0' || row > '7') {
-    printf("\nInvalid row, please try again. \n");
+    display(home, opp);
+    printf("\nERROR: Invalid row, please try again. \n");
     return 0;
   }
   // invalid char for dir
   if (dir != 'L' && dir != 'R' && dir != 'U' && dir != 'D') {
-    printf("\nInvalid direction, please try again. \n");
+    display(home, opp);
+    printf("\nERROR: Invalid direction, please try again. \n");
     return 0;
   }
 
@@ -103,7 +107,8 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
   //changing variables in char**
   while (len) {
     if (home->board_[r][c] != '.') {
-      printf("\nOverlapping error, please try again.\n");
+      display(home, opp);
+      printf("\nERROR: Overlapping ships, please try again.\n");
       return 0;
     }
     r = r+y;
@@ -119,32 +124,37 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
   // set up direction
   if (dir == 'L') {
     if (!(c - (len - 1) >= 0)) {
-      printf("\nOut-of-bounds, please try again.\n");
+      display(home, opp);
+      printf("\nERROR: Out-of-bounds, please try again.\n");
       return 0;
     }
   }
   else if (dir == 'R') {
     if (!(c + (len - 1) <= 9)) {
-      printf("\nOut-of-bounds, please try again.\n");
+      display(home, opp);
+      printf("\nERROR: Out-of-bounds, please try again.\n");
       return 0;
     }
   }
   else if (dir == 'U') {
     if (!(r - (len - 1) >= 0)) {
-      printf("\nOut-of-bounds, please try again.\n");
+      display(home, opp);
+      printf("\nERROR: Out-of-bounds, please try again.\n");
       return 0;
     }
   }
   else {
     if (!(r + (len - 1) <= 9)) {
-      printf("\nOut-of-bounds, please try again.\n");
+      display(home, opp);
+      printf("\nERROR: Out-of-bounds, please try again.\n");
       return 0;
     }
   }
 
   // ship already placed
   if (ship == shipP[0] || ship == shipP[1] || ship == shipP[2] || ship == shipP[3] || ship == shipP[4]) {
-    printf("\nShip already placed, please input another ship. \n");
+    display(home, opp);
+    printf("\nERROR: Ship already placed, please input another ship. \n");
     return 0;
   }
 
@@ -152,35 +162,49 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
 
 }
 
-int parse_placement (char * ship_p, char * col_p, char * row_p, char * dir_p, struct board * home, char shipP[256]) {
+int parse_placement (char * ship_p, char * col_p, char * row_p, char * dir_p, struct board * home, struct board * opp, char shipP[256]) {
 
 	char buffer[256];
 
-  printf("\nSETUP PHASE: \n\nTo place a ship, enter the following, each separated by a space: \n1. the letter representing the ship \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter representing the column \n3. the digit representing the row \n4. the letter representing the direction \n\tLeft: L \n\tRight: R \n\tUp: U \n\tDown: D \nFor example: S A 0 D will place a submarine occupying A,0 A,1 A,2");
-
   // print out placed ships
-  printf("\n\nShips already placed: ");
-  int i;
-  for (i = 0; i < 5; i++) {
-    printf("%c ", shipP[i]);
-  }
+  printf("\n\nShips left to place: ");
+    //ship + size
 
-  printf("\n\nEnter ship, column, row, and direction: ");
+
+  printf("\n\nEnter ship (A, B, C, D, S): ");
   fgets(buffer, sizeof(buffer), stdin);
   *strchr(buffer, '\n') = 0;
+  int scanned = sscanf(buffer, "%c", ship_p); //won't make use of extra tokens
 
-	//for testing
-  //printf("\nPlayer Input: %s \n", buffer);
-  int scanned = sscanf(buffer, "%c %c %c %c", ship_p, col_p, row_p, dir_p); //won't make use of extra tokens
-  //printf("\nParsed Input: \n\tship: %c \n\tcol: %c \n\trow: %c \n\tdir: %c \n", *ship_p, *col_p, *row_p, *dir_p);
-
-  //FIX if there are < or > 4 inputs
-  if (scanned < 4){
-    printf("\nMissing one or more instructions, please try again. \n");
+  if (scanned != 1){
+    display(home, opp);
+    printf("\nERROR: Ship input invalid, please try again. \n");
     return 0;
   }
 
-  return placement_valid(*ship_p, *col_p, *row_p, *dir_p, home, shipP);
+  printf("Enter coordinate (e.g. A0): ");
+  fgets(buffer, sizeof(buffer), stdin);
+  *strchr(buffer, '\n') = 0;
+  scanned = sscanf(buffer, "%c%c", col_p, row_p);
+
+  if (scanned != 2){
+    display(home, opp);
+    printf("\nERROR: Coordinate input invalid, please try again. \n");
+    return 0;
+  }
+
+  printf("Enter direction (L, R, U, D): ");
+  fgets(buffer, sizeof(buffer), stdin);
+  *strchr(buffer, '\n') = 0;
+  scanned = sscanf(buffer, "%c", dir_p);
+
+  if (scanned != 1){
+    display(home, opp);
+    printf("\nERROR: Direction input invalid, please try again. \n");
+    return 0;
+  }
+
+  return placement_valid(*ship_p, *col_p, *row_p, *dir_p, home, opp, shipP);
 
 }
 
@@ -263,7 +287,26 @@ void attack (struct board * receive, char row, char col) {
 }
 
 int main() {
-  printf("\e[8;33;68;t");
+  printf("\e[8;20;68;t");
+
+  //instructions
+  int start_setup = 0;
+  char buffer1[256];
+  char buffer2[256];
+
+  pretty_spacing(30);
+  printf("\n\n\nHello, and welcome to Battleship! \nFirst, we will begin with a setup phase (where you will be asked to place your ships), then we will continue to the playing phase (where\nyou compete with your opponent). \nAll standard Battleship rules apply, but we will explain the syntax of our terminal game. \n\nPress any key to continue.\n");
+  fgets(buffer1, sizeof(buffer1), stdin);
+
+  if (sizeof(buffer1)>0) {
+    pretty_spacing(30);
+    printf("\nSETUP PHASE: \n\nYou will be asked to input the ship, the starting coordinates of the\nlocation, and the direction in which it extends.\n1. the available ships \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter and digit corresponding to the column and the row \n4. the letter representing the direction \n\tL: left \n\tR: right \n\tU: up \n\tD: down \nFor example: S A0 D will place a submarine occupying A,0 A,1 A,2\n\nPress any key to continue.\n");
+    fgets(buffer2, sizeof(buffer2), stdin);
+  }
+
+  if (sizeof(buffer2)>0) {
+    start_setup++;
+  }
 
   //setup
   struct aircraft *A = create_aircraft('A', 5);
@@ -285,13 +328,11 @@ int main() {
   char dir;
   int ships_placed = 0;
 
-  while(ships_placed < 5){
+  while(ships_placed < 5 && start_setup){
     display(home, opponent);
-    while(!parse_placement(&ship, &col, &row, &dir, home, shipPlace)){
+    while(!parse_placement(&ship, &col, &row, &dir, home, opponent, shipPlace)){
     }
     place_ship(ship, col, row, dir, home, shipPlace);
-    display(home, opponent);
-    printf("\nSuccesful placement!\n");
     ships_placed++;
   }
 
