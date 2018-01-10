@@ -54,5 +54,6 @@ xuJ -- 2018-01-09 11:11
 	fixed the formatting so that the window will seem to "refresh" after every input
 	changed the grid to 8x8 (the board game version)
 
-xuJ -- 2018-01-10 12:16
+xuJ -- 2018-01-10 12:30
 	changed the formatting and input for the setup phase to be more user-friendly
+	added the instructions for the playing phase

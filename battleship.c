@@ -295,12 +295,12 @@ int main() {
   char buffer2[256];
 
   pretty_spacing(30);
-  printf("\n\n\nHello, and welcome to Battleship! \nFirst, we will begin with a setup phase (where you will be asked to place your ships), then we will continue to the playing phase (where\nyou compete with your opponent). \nAll standard Battleship rules apply, but we will explain the syntax of our terminal game. \n\nPress any key to continue.\n");
+  printf("\n\n\nHello, and welcome to Battleship! \nFirst, we will begin with a setup phase (where you will be asked to place your ships), then we will continue to the playing phase (where\nyou compete with your opponent). \nAll standard Battleship rules apply, but we will explain the syntax of our terminal game. \n\nPress enter to continue.\n");
   fgets(buffer1, sizeof(buffer1), stdin);
 
   if (sizeof(buffer1)>0) {
     pretty_spacing(30);
-    printf("\nSETUP PHASE: \n\nYou will be asked to input the ship, the starting coordinates of the\nlocation, and the direction in which it extends.\n1. the available ships \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter and digit corresponding to the column and the row \n4. the letter representing the direction \n\tL: left \n\tR: right \n\tU: up \n\tD: down \nFor example: S A0 D will place a submarine occupying A,0 A,1 A,2\n\nPress any key to continue.\n");
+    printf("\nSETUP PHASE: \n\nYou will be asked to input the ship, the starting coordinates of the\nlocation, and the direction in which it extends.\n1. the available ships \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter and digit corresponding to the column and the row \n4. the letter representing the direction \n\tL: left \n\tR: right \n\tU: up \n\tD: down \nFor example: S A0 D will place a submarine occupying A0, A1, and A2\n\nPress enter to continue.\n");
     fgets(buffer2, sizeof(buffer2), stdin);
   }
 
@@ -336,9 +336,24 @@ int main() {
     ships_placed++;
   }
 
-  //playing phase
-  while (!game_over(home, opponent)) {
+  //receive opponent board
 
+  //playing instructions
+  int start_play = 0;
+  char buffer3[256];
+
+  pretty_spacing(30);
+  printf("\nPLAYING PHASE: \n\nYou will be asked to input the coordinates of the location you would\nlike to send a missile to. \n\n\tFor example: A0 \nHere is what the board display means: \n\t. (empty slot) \n\t* (missed ship) \n\tH (hit ship)\n\nPress enter to continue.\n");
+  fgets(buffer3, sizeof(buffer3), stdin);
+
+  if (sizeof(buffer3)>0) {
+    start_play++;
+  }
+
+  //playing phase
+  //while (!game_over(home, opponent) && start_play) {
+  while (1) {
+    display(home, opponent);
   }
 
   //game over
