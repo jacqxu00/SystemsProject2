@@ -57,7 +57,7 @@ void display (struct board * home, struct board * opp) {
 
 }
 
-int placement_valid (char ship, char col, char row, char dir, struct board * home, struct board * opp, char shipP[256]) {
+int placement_valid (char ship, char col, char row, char dir, struct board * home, struct board * opp, char shipP[6][13]) {
 
   // invalid char for ship
   if (ship != 'A' && ship != 'B' && ship != 'C' && ship != 'S' && ship != 'D') {
@@ -130,21 +130,21 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
     }
   }
   else if (dir == 'R') {
-    if (!(c + (len - 1) <= 9)) {
+    if (!(c + (len - 1) <= 7)) {
       display(home, opp);
       printf("\nERROR: Out-of-bounds, please try again.\n");
       return 0;
     }
   }
   else if (dir == 'U') {
-    if (!(r - (len - 1) >= 0)) {
+    if (!(r - (len - 1) >= 7)) {
       display(home, opp);
       printf("\nERROR: Out-of-bounds, please try again.\n");
       return 0;
     }
   }
   else {
-    if (!(r + (len - 1) <= 9)) {
+    if (!(r + (len - 1) <= 7)) {
       display(home, opp);
       printf("\nERROR: Out-of-bounds, please try again.\n");
       return 0;
@@ -152,7 +152,7 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
   }
 
   // ship already placed
-  if (ship == shipP[0] || ship == shipP[1] || ship == shipP[2] || ship == shipP[3] || ship == shipP[4]) {
+  if (ship != shipP[0][0] && ship != shipP[1][0] && ship != shipP[2][0] && ship != shipP[3][0] && ship != shipP[4][0]) {
     display(home, opp);
     printf("\nERROR: Ship already placed, please input another ship. \n");
     return 0;
@@ -162,12 +162,16 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
 
 }
 
-int parse_placement (char * ship_p, char * col_p, char * row_p, char * dir_p, struct board * home, struct board * opp, char shipP[256]) {
+int parse_placement (char * ship_p, char * col_p, char * row_p, char * dir_p, struct board * home, struct board * opp, char shipP[6][13]) {
 
 	char buffer[256];
 
-  // print out placed ships
+  // print out available ships
   printf("\n\nShips left to place: ");
+  int i;
+  for (i = 0; i < 5; i++) {
+    printf("%s ", shipP[i]);
+  }
     //ship + size
 
 
@@ -208,7 +212,7 @@ int parse_placement (char * ship_p, char * col_p, char * row_p, char * dir_p, st
 
 }
 
-void place_ship (char ship, char col, char row, char dir, struct board * home, char shipP[256]){
+void place_ship (char ship, char col, char row, char dir, struct board * home, char shipP[6][13]){
 
   //set up direction
   int x = 0;
@@ -238,11 +242,11 @@ void place_ship (char ship, char col, char row, char dir, struct board * home, c
   }
 
   //adding ship to char array of placed ships
-  if (ship == 'A') {shipP[0] = 'A';}
-  else if (ship == 'B') {shipP[1] = 'B';}
-  else if (ship == 'C') {shipP[2] = 'C';}
-  else if (ship == 'S') {shipP[3] = 'S';}
-  else {shipP[4] = 'D';}
+  if (ship == 'A') {strcpy(shipP[0], "");}
+  else if (ship == 'B') {strcpy(shipP[1], "");}
+  else if (ship == 'C') {strcpy(shipP[2], "");}
+  else if (ship == 'S') {strcpy(shipP[3], "");}
+  else {strcpy(shipP[4], "");}
 
 }
 
@@ -317,7 +321,13 @@ int main() {
 
   struct board *home = create_board(8, 8);
   struct board *opponent = create_board(8, 8);
-  char shipPlace[256] = "     ";
+  char shipPlace[6][13];
+	strcpy(shipPlace[0], "A (size 5)");
+	strcpy(shipPlace[1], "B (size 4)");
+	strcpy(shipPlace[2], "C (size 3)");
+	strcpy(shipPlace[3], "S (size 3)");
+	strcpy(shipPlace[4], "D (size 2)");
+  
   initialize_board(home);
   initialize_board(opponent);
 

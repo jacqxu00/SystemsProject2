@@ -57,3 +57,6 @@ xuJ -- 2018-01-09 11:11
 xuJ -- 2018-01-10 12:30
 	changed the formatting and input for the setup phase to be more user-friendly
 	added the instructions for the playing phase
+	
+kangY -- 2018-01-10 4:51
+	fixed char array so that every time the user places a ship, the available ships and sizes are shown
