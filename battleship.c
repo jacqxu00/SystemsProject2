@@ -162,7 +162,18 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
 
 }
 
-int parse_placement (char * ship_p, char * col_p, char * row_p, char * dir_p, struct board * home, struct board * opp, char shipP[6][13]) {
+int missile_valid (char col, char row, struct board * home, struct board * opp){
+  int c = col - 'A';
+  int r = row - '0';
+  if (c < 0 || c > 9 || r < 0 || r > 9) {
+    display(home, opp);
+    printf("\nERROR: Coordinate out of bounds, please try again.\n");
+    return 0;
+  }
+  return 1;
+}
+
+int parse_ship (char * ship_p, char * col_p, char * row_p, char * dir_p, struct board * home, struct board * opp, char shipP[6][13]) {
 
 	char buffer[256];
 
@@ -170,7 +181,7 @@ int parse_placement (char * ship_p, char * col_p, char * row_p, char * dir_p, st
   printf("\n\nShips left to place: ");
   int i;
   for (i = 0; i < 5; i++) {
-    printf("%s ", shipP[i]);
+    printf("%s\n\t\t     ", shipP[i]);
   }
     //ship + size
 
@@ -250,6 +261,42 @@ void place_ship (char ship, char col, char row, char dir, struct board * home, c
 
 }
 
+int parse_missile (char * col_p, char * row_p, struct board * home, struct board * opp) {
+
+  	char buffer[256];
+
+    printf("\n\nEnter a coordinate to hit (e.g. 'A0'): ");
+    fgets(buffer, sizeof(buffer), stdin);
+    *strchr(buffer, '\n') = 0;
+    int scanned = sscanf(buffer, "%c%c", col_p, row_p);
+
+    if (scanned != 2){
+      display(home, opp);
+      printf("\nERROR: coordinate invalid, please try again. \n");
+      return 0;
+    }
+
+    return missile_valid(*col_p, *row_p, home, opp);
+}
+
+void place_missile (char col, char row, struct board * opp) {
+
+    if (opp->board_[row][col] == '.') {
+      opp->board_[row][col] = '*';
+      printf("\nYou've missed. It is now your opponent's turn.\n");
+    }
+
+    else if (opp->board_[row][col] == '*' || opp->board_[row][col] == 'H') {
+      printf("\nYou've already entered this coordinate. Please try again.\n");
+    }
+
+    else {
+      opp->board_[row][col] = 'H';
+      printf("\nYou've hit a ship! It is now your opponent's turn.\n");
+    }
+
+}
+
 int player_loss (struct board * home) {
 
   int ans = 1;
@@ -273,25 +320,8 @@ int game_over (struct board * home, struct board * opp) {
 
 }
 
-void attack (struct board * receive, char row, char col) {
-
-  if (receive->board_[row][col] == '.') {
-    receive->board_[row][col] = '*';
-    printf("\nYou've missed. It is now your opponent's turn.\n");
-  }
-
-  else if (receive->board_[row][col] == '*' || receive->board_[row][col] == 'H') {
-    printf("\nYou've already entered this coordinate. Please try again.\n");
-  }
-
-  else {
-    receive->board_[row][col] = 'H';
-    printf("\nYou've hit a ship! It is now your opponent's turn.\n");
-  }
-}
-
 int main() {
-  printf("\e[8;20;68;t");
+  printf("\e[8;21;68;t");
 
   //instructions
   int start_setup = 0;
@@ -327,7 +357,7 @@ int main() {
 	strcpy(shipPlace[2], "C (size 3)");
 	strcpy(shipPlace[3], "S (size 3)");
 	strcpy(shipPlace[4], "D (size 2)");
-  
+
   initialize_board(home);
   initialize_board(opponent);
 
@@ -340,7 +370,7 @@ int main() {
 
   while(ships_placed < 5 && start_setup){
     display(home, opponent);
-    while(!parse_placement(&ship, &col, &row, &dir, home, opponent, shipPlace)){
+    while(!parse_ship(&ship, &col, &row, &dir, home, opponent, shipPlace)){
     }
     place_ship(ship, col, row, dir, home, shipPlace);
     ships_placed++;
@@ -353,7 +383,7 @@ int main() {
   char buffer3[256];
 
   pretty_spacing(30);
-  printf("\nPLAYING PHASE: \n\nYou will be asked to input the coordinates of the location you would\nlike to send a missile to. \n\n\tFor example: A0 \nHere is what the board display means: \n\t. (empty slot) \n\t* (missed ship) \n\tH (hit ship)\n\nPress enter to continue.\n");
+  printf("\nPLAYING PHASE: \n\nYou will be asked to input the coordinates of the location you would\nlike to send a missile to. \n\tFor example: A0 \n\nHere is what the board display means: \n\t. (empty slot) \n\t* (missed ship) \n\tH (hit ship)\n\nPress enter to continue.\n");
   fgets(buffer3, sizeof(buffer3), stdin);
 
   if (sizeof(buffer3)>0) {
@@ -361,9 +391,14 @@ int main() {
   }
 
   //playing phase
+  char miss_c;
+  char miss_r;
   //while (!game_over(home, opponent) && start_play) {
   while (1) {
     display(home, opponent);
+    while(!parse_missile(&miss_c, &miss_r, home, opponent)){
+    }
+    place_missile(miss_c, miss_r, opponent);
   }
 
   //game over
