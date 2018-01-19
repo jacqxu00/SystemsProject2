@@ -1,5 +1,36 @@
 #include "battleship.h"
 
+int player(int argc, char ** argv){
+  /*PARAMETERS player 1 should run with cmd line arg "1"
+    player 2 should run with cmd line arg "2" and player 1's IP address
+  */
+  /*RETURNS 1 for player 1 ("server")
+    2 for player 2 ("client")
+    0 for error
+  */
+  if(argc >= 2){
+    if(!strcmp(argv[1], "1")){
+      return 1;
+    }else if(!strcmp(argv[1], "2")){
+      if(argc >= 3){
+	//check for valid IP address?
+	return 2;
+      }else{
+	printf("specify player 1's IP address");
+      }
+    }
+  }else{
+    printf("insufficient arguments");
+  }
+  
+  return 0;
+}
+
+int connect(int player, int address){
+
+  return 0;
+}
+
 void pretty_spacing(int x) {
   int i;
   for (i = 0; i < x; i ++) {
@@ -8,11 +39,11 @@ void pretty_spacing(int x) {
 }
 
 void initialize_board (struct board * home) {
-	int i, j;
+  int i, j;
   for (i = 0; i < home->rows; i++) {
-		for (j = 0; j < home->cols; j++) {
-    	home->board_[i][j] = '.';
-		}
+    for (j = 0; j < home->cols; j++) {
+      home->board_[i][j] = '.';
+    }
   }
 }
 
@@ -175,7 +206,7 @@ int missile_valid (char col, char row, struct board * home, struct board * opp){
 
 int parse_ship (char * ship_p, char * col_p, char * row_p, char * dir_p, struct board * home, struct board * opp, char shipP[6][13]) {
 
-	char buffer[256];
+  char buffer[256];
 
   // print out available ships
   printf("\n\nShips left to place: ");
@@ -183,7 +214,7 @@ int parse_ship (char * ship_p, char * col_p, char * row_p, char * dir_p, struct 
   for (i = 0; i < 5; i++) {
     printf("%s\n\t\t     ", shipP[i]);
   }
-    //ship + size
+  //ship + size
 
 
   printf("\n\nEnter ship (A, B, C, D, S): ");
@@ -320,7 +351,15 @@ int game_over (struct board * home, struct board * opp) {
 
 }
 
-int main() {
+int main(int argc, char ** argv) {
+
+  //network setup
+  int player_num;
+  int address = 0;
+  while(!(player_num = player(argc, argv))){
+  }
+  connect(player_num, address);
+  
   printf("\e[8;21;68;t");
 
   //instructions
@@ -329,12 +368,12 @@ int main() {
   char buffer2[256];
 
   pretty_spacing(30);
-  printf("\n\n\nHello, and welcome to Battleship! \nFirst, we will begin with a setup phase (where you will be asked to place your ships), then we will continue to the playing phase (where\nyou compete with your opponent). \nAll standard Battleship rules apply, but we will explain the syntax of our terminal game. \n\nPress enter to continue.\n");
+  printf(WELCOME_MSG);
   fgets(buffer1, sizeof(buffer1), stdin);
 
   if (sizeof(buffer1)>0) {
     pretty_spacing(30);
-    printf("\nSETUP PHASE: \n\nYou will be asked to input the ship, the starting coordinates of the\nlocation, and the direction in which it extends.\n1. the available ships \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter and digit corresponding to the column and the row \n4. the letter representing the direction \n\tL: left \n\tR: right \n\tU: up \n\tD: down \nFor example: S A0 D will place a submarine occupying A0, A1, and A2\n\nPress enter to continue.\n");
+    printf(SETUP_INSTRUCTIONS);
     fgets(buffer2, sizeof(buffer2), stdin);
   }
 
@@ -352,11 +391,11 @@ int main() {
   struct board *home = create_board(8, 8);
   struct board *opponent = create_board(8, 8);
   char shipPlace[6][13];
-	strcpy(shipPlace[0], "A (size 5)");
-	strcpy(shipPlace[1], "B (size 4)");
-	strcpy(shipPlace[2], "C (size 3)");
-	strcpy(shipPlace[3], "S (size 3)");
-	strcpy(shipPlace[4], "D (size 2)");
+  strcpy(shipPlace[0], "A (size 5)");
+  strcpy(shipPlace[1], "B (size 4)");
+  strcpy(shipPlace[2], "C (size 3)");
+  strcpy(shipPlace[3], "S (size 3)");
+  strcpy(shipPlace[4], "D (size 2)");
 
   initialize_board(home);
   initialize_board(opponent);
@@ -383,7 +422,7 @@ int main() {
   char buffer3[256];
 
   pretty_spacing(30);
-  printf("\nPLAYING PHASE: \n\nYou will be asked to input the coordinates of the location you would\nlike to send a missile to. \n\tFor example: A0 \n\nHere is what the board display means: \n\t. (empty slot) \n\t* (missed ship) \n\tH (hit ship)\n\nPress enter to continue.\n");
+  printf(PLAYING_INSTRUCTIONS);
   fgets(buffer3, sizeof(buffer3), stdin);
 
   if (sizeof(buffer3)>0) {
