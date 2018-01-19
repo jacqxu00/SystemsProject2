@@ -22,7 +22,7 @@ int player(int argc, char ** argv){
   }else{
     printf("insufficient arguments");
   }
-  
+
   return 0;
 }
 
@@ -194,9 +194,7 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
 }
 
 int missile_valid (char col, char row, struct board * home, struct board * opp){
-  int c = col - 'A';
-  int r = row - '0';
-  if (c < 0 || c > 9 || r < 0 || r > 9) {
+  if (row < '0' || row > '7' || col < 'A' || col > 'H') {
     display(home, opp);
     printf("\nERROR: Coordinate out of bounds, please try again.\n");
     return 0;
@@ -359,7 +357,7 @@ int main(int argc, char ** argv) {
   while(!(player_num = player(argc, argv))){
   }
   connect(player_num, address);
-  
+
   printf("\e[8;21;68;t");
 
   //instructions
@@ -373,11 +371,7 @@ int main(int argc, char ** argv) {
 
   if (sizeof(buffer1)>0) {
     pretty_spacing(30);
-<<<<<<< HEAD
-    printf("\nSETUP PHASE: \n\nYou will be asked to input the ship, the starting coordinates of the\nlocation, and the direction in which it extends.\n1. the available ships \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter and digit corresponding to the column and the row \n3. the letter representing the direction \n\tL: left \n\tR: right \n\tU: up \n\tD: down \nFor example: S A0 D will place a submarine occupying A0, A1, and A2\n\nPress enter to continue.\n");
-=======
     printf(SETUP_INSTRUCTIONS);
->>>>>>> a3fdbd0d4b08664262018e3fe7ab46585279638f
     fgets(buffer2, sizeof(buffer2), stdin);
   }
 
