@@ -63,3 +63,6 @@ kangY -- 2018-01-10 4:51
 
 xuJ -- 2018-01-18 10:52
 	added functions for playing phase but there's a seg fault I haven't figured out yet
+
+xuJ -- 2018-01-19 10:43
+	completed the README file

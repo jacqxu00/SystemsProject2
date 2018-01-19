@@ -334,7 +334,7 @@ int main() {
 
   if (sizeof(buffer1)>0) {
     pretty_spacing(30);
-    printf("\nSETUP PHASE: \n\nYou will be asked to input the ship, the starting coordinates of the\nlocation, and the direction in which it extends.\n1. the available ships \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter and digit corresponding to the column and the row \n4. the letter representing the direction \n\tL: left \n\tR: right \n\tU: up \n\tD: down \nFor example: S A0 D will place a submarine occupying A0, A1, and A2\n\nPress enter to continue.\n");
+    printf("\nSETUP PHASE: \n\nYou will be asked to input the ship, the starting coordinates of the\nlocation, and the direction in which it extends.\n1. the available ships \n\tA: aircraft, size 5 \n\tB: battleship, size 4 \n\tC: cruiser, size 3 \n\tS: submarine, size 3 \n\tD: destroyer, size 2 \n2. the letter and digit corresponding to the column and the row \n3. the letter representing the direction \n\tL: left \n\tR: right \n\tU: up \n\tD: down \nFor example: S A0 D will place a submarine occupying A0, A1, and A2\n\nPress enter to continue.\n");
     fgets(buffer2, sizeof(buffer2), stdin);
   }
 
