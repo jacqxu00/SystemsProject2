@@ -18,12 +18,12 @@ int player(int argc, char ** argv){
 	//check for valid IP address?
 	return 2;
       }else{
-	printf("specify player 1's IP address");
+	printf("specify player 1's IP address\n");
 	exit(1);
       }
     }
   }else{
-    printf("insufficient arguments");
+    printf("insufficient command line arguments\n");
     exit(1);
   }
 
