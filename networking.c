@@ -30,7 +30,8 @@ int player(int argc, char ** argv){
   return 0;
 }
 
-int connect(int player, int address){
+int connect(int player, int address){ //return if successfully connected
 
+  return 1;
   return 0;
 }

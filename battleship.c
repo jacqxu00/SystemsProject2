@@ -325,7 +325,9 @@ int main(int argc, char ** argv) {
   int address = 0;
   player_num = player(argc, argv);
   //wait for both to be ready first?
-  connect(player_num, address);
+  while(!(connect(player_num, address))){
+
+  }
 
   printf("\e[8;21;68;t");
 
