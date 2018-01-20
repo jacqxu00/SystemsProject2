@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int player(int argc, char ** argv){
@@ -18,10 +19,12 @@ int player(int argc, char ** argv){
 	return 2;
       }else{
 	printf("specify player 1's IP address");
+	exit(1);
       }
     }
   }else{
     printf("insufficient arguments");
+    exit(1);
   }
 
   return 0;

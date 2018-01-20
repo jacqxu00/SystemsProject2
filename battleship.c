@@ -323,8 +323,8 @@ int main(int argc, char ** argv) {
   //network setup
   int player_num;
   int address = 0;
-  while(!(player_num = player(argc, argv))){
-  }
+  player_num = player(argc, argv);
+  //wait for both to be ready first?
   connect(player_num, address);
 
   printf("\e[8;21;68;t");
