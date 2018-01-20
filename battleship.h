@@ -73,17 +73,18 @@ struct destroyer *create_destroyer (char name, int size) {
   return D;
 }
 struct board *create_board (int rows, int cols) {
-	struct board *b = (struct board *)malloc(sizeof(struct board));
-	b->rows = rows;
-	b->cols = cols;
+  struct board *b = (struct board *)malloc(sizeof(struct board));
+  b->rows = rows;
+  b->cols = cols;
 
-	char ** board_ = (char **)malloc(sizeof(char*) * rows);
-	for (int i = 0; i < rows; i++) {
-		board_[i] = (char *)malloc(sizeof(char) * cols);
-	}
-	b->board_ = board_;
+  char ** board_ = (char **)malloc(sizeof(char*) * rows);
+  int i;
+  for (i = 0; i < rows; i++) {
+    board_[i] = (char *)malloc(sizeof(char) * cols);
+  }
+  b->board_ = board_;
 
-	return b;
+  return b;
 }
 
 //function headers
