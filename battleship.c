@@ -325,7 +325,7 @@ int main(int argc, char ** argv) {
   int listen_socket; //for player 1
   int client_socket; //for player 1
   int server_socket; //for player 2
-  char * address = argv[3];
+  char * address = argv[2];
   
   player_num = player(argc, argv);
   //wait for both to be ready first?
