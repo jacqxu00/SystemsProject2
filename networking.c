@@ -33,7 +33,7 @@ int player(int argc, char ** argv){
 int connecting(int player, char * address, int * listen_socket_p, int * client_socket_p, int * server_socket_p){ //return if successfully connected
   if(player == 1){
     //server code
-    *listen_socket_p = server_setup();
+    *listen_socket_p = server_setup(address);
     *client_socket_p = server_connect(*listen_socket_p);
 
   }else{

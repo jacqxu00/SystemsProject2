@@ -7,7 +7,7 @@ void error_check( int i, char *s ) { //modify behavior after testing
   }
 }
 
-int server_setup() {
+int server_setup(char * address) {
   int sd, i;
 
   //create the socket
@@ -21,7 +21,7 @@ int server_setup() {
   hints->ai_family = AF_INET;  //IPv4 address
   hints->ai_socktype = SOCK_STREAM;  //TCP socket
   hints->ai_flags = AI_PASSIVE;  //Use all valid addresses
-  getaddrinfo(NULL, PORT, hints, &results); //NULL means use local address
+  getaddrinfo(address, PORT, hints, &results); //NULL means use local address
 
   //bind the socket to address and port
   i = bind( sd, results->ai_addr, results->ai_addrlen );
