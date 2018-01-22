@@ -30,11 +30,11 @@ int player(int argc, char ** argv){
   return 0;
 }
 
-int connect(int player, char * address, int * listen_socket_p, int * client_socket_p, int * server_socket_p){ //return if successfully connected
+int connecting(int player, char * address, int * listen_socket_p, int * client_socket_p, int * server_socket_p){ //return if successfully connected
   if(player == 1){
     //server code
     *listen_socket_p = server_setup();
-    *client_socket_p = server_connect(listen_socket);
+    *client_socket_p = server_connect(*listen_socket_p);
 
   }else{
     //client code

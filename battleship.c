@@ -329,7 +329,7 @@ int main(int argc, char ** argv) {
   
   player_num = player(argc, argv);
   //wait for both to be ready first?
-  connect(player_num, address, &listen_socket, &client_socket, &server_socket);
+  connecting(player_num, address, &listen_socket, &client_socket, &server_socket);
 
   printf("\e[8;21;68;t");
 
@@ -418,6 +418,9 @@ int main(int argc, char ** argv) {
   else if (game_over(home, opponent) == 2) {
     printf("\nCONGRATULATIONS! You've won!\n");
   }
+  close(client_socket);
+  //close(listen_socket);
+  //close(server_socket);
 
   return 0;
 }
