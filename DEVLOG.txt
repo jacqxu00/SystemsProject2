@@ -76,4 +76,8 @@ kangY -- 2018-01-21 22:58
 
 kangY, chenW -- 2018-01-22 13:51
 	finished establishing network connection (not all errors handled)
+
+kangY, chenW -- 2018-01-22 15:14
+	fixed the seg fault
+	worked on playing phase (still need to continue and finish)
 	
