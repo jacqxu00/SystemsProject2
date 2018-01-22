@@ -1,5 +1,5 @@
 # Systems Project 2: Battleship
-Created by: Jackie Xu, Yedoh Kang, Winnie Chen
+Created by: Winnie Chen, Yedoh Kang, Jackie Xu (Period 4)
 
 ## Instructions
 There is a setup phase in which you place your ships, then a playing phase in which you and your opponent begin competing. All standard Battleship rules apply. Syntax (aka player input) instructions are also displayed in the game.
@@ -8,8 +8,7 @@ Neither you nor your opponent know where each other's ships are placed. You take
 
 ### Setup Phase
 
-You will be asked to input the ship, the starting coordinates of the
-location, and the direction in which it extends.
+You will be asked to input the ship, the starting coordinates of the location, and the direction in which it extends.
 1. the available ships
 * A: aircraft, size 5
 * B: battleship, size 4
@@ -34,3 +33,19 @@ Here is what the board display means:
 * . (empty slot)
 * * (missed ship)
 * H (hit ship)
+
+### Launch Instructions
+
+1. Open up the terminal.
+2. Follow these instructions: 
+```
+$ git clone https://github.com/jacqxu00/SystemsProject2.git
+$ cd SystemsProject2
+$ make
+$ make run
+```
+3. Have fun!
+
+
+
+
