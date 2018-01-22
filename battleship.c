@@ -194,7 +194,9 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
 }
 
 int missile_valid (char col, char row, struct board * home, struct board * opp){
-  if (row < '0' || row > '7' || col < 'A' || col > 'H') {
+  int c = col - 'A';
+  int r = row - '0';
+  if (c < 0 || c > 7 || r < 0 || r > 9) {
     display(home, opp);
     printf("\nERROR: Coordinate out of bounds, please try again.\n");
     return 0;
