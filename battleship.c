@@ -267,7 +267,7 @@ int parse_missile (char * col_p, char * row_p, struct board * home, struct board
 
   printf("\n\nEnter a coordinate to hit (e.g. 'A0'): ");
   fgets(buffer, sizeof(buffer), stdin);
-  *strchr(buffer, '\n') = 0;
+  //*strchr(buffer, '\n') = 0;
   int scanned = sscanf(buffer, "%c%c", col_p, row_p);
 
   if (scanned != 2){
