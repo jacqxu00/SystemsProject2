@@ -40,7 +40,7 @@ int connecting(int player, char * address, int * listen_socket_p, int * client_s
     //client code
     //int server_socket = client_setup(address);
     //using TEST_IP for now
-    *server_socket_p = client_setup(TEST_IP);
+    *server_socket_p = client_setup(address);
     
   }
   return 1;

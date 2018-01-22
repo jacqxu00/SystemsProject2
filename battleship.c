@@ -330,6 +330,27 @@ int main(int argc, char ** argv) {
   player_num = player(argc, argv);
   //wait for both to be ready first?
   connecting(player_num, address, &listen_socket, &client_socket, &server_socket);
+	
+	printf("TESTING\n");
+	
+	char buffer[256];
+	
+	if (player_num == 2) {
+		printf("enter data: ");
+		fgets(buffer, sizeof(buffer), stdin);
+		write(server_socket, buffer, sizeof(buffer));
+		read(server_socket, buffer, sizeof(buffer));
+		printf("received: [%s]\n", buffer);
+	}
+	else {
+		while(read(client_socket, buffer, sizeof(buffer))) {
+			printf("[subserver %d] received: [%s]\n", getpid(), buffer);
+			write(client_socket, buffer, sizeof(buffer));
+			close(client_socket);
+			return 0;
+		}
+	}
+	/*
 
   printf("\e[8;21;68;t");
 
@@ -421,6 +442,7 @@ int main(int argc, char ** argv) {
   close(client_socket);
   //close(listen_socket);
   //close(server_socket);
+	*/
 
   return 0;
 }
