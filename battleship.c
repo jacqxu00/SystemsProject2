@@ -1,36 +1,5 @@
 #include "battleship.h"
 
-int player(int argc, char ** argv){
-  /*PARAMETERS player 1 should run with cmd line arg "1"
-    player 2 should run with cmd line arg "2" and player 1's IP address
-  */
-  /*RETURNS 1 for player 1 ("server")
-    2 for player 2 ("client")
-    0 for error
-  */
-  if(argc >= 2){
-    if(!strcmp(argv[1], "1")){
-      return 1;
-    }else if(!strcmp(argv[1], "2")){
-      if(argc >= 3){
-	//check for valid IP address?
-	return 2;
-      }else{
-	printf("specify player 1's IP address");
-      }
-    }
-  }else{
-    printf("insufficient arguments");
-  }
-
-  return 0;
-}
-
-int connect(int player, int address){
-
-  return 0;
-}
-
 void pretty_spacing(int x) {
   int i;
   for (i = 0; i < x; i ++) {
@@ -294,37 +263,37 @@ void place_ship (char ship, char col, char row, char dir, struct board * home, c
 
 int parse_missile (char * col_p, char * row_p, struct board * home, struct board * opp) {
 
-  	char buffer[256];
+  char buffer[256];
 
-    printf("\n\nEnter a coordinate to hit (e.g. 'A0'): ");
-    fgets(buffer, sizeof(buffer), stdin);
-    *strchr(buffer, '\n') = 0;
-    int scanned = sscanf(buffer, "%c%c", col_p, row_p);
+  printf("\n\nEnter a coordinate to hit (e.g. 'A0'): ");
+  fgets(buffer, sizeof(buffer), stdin);
+  *strchr(buffer, '\n') = 0;
+  int scanned = sscanf(buffer, "%c%c", col_p, row_p);
 
-    if (scanned != 2){
-      display(home, opp);
-      printf("\nERROR: coordinate invalid, please try again. \n");
-      return 0;
-    }
+  if (scanned != 2){
+    display(home, opp);
+    printf("\nERROR: coordinate invalid, please try again. \n");
+    return 0;
+  }
 
-    return missile_valid(*col_p, *row_p, home, opp);
+  return missile_valid(*col_p, *row_p, home, opp);
 }
 
 void place_missile (char col, char row, struct board * opp) {
 
-    if (opp->board_[row][col] == '.') {
-      opp->board_[row][col] = '*';
-      printf("\nYou've missed. It is now your opponent's turn.\n");
-    }
+  if (opp->board_[row][col] == '.') {
+    opp->board_[row][col] = '*';
+    printf("\nYou've missed. It is now your opponent's turn.\n");
+  }
 
-    else if (opp->board_[row][col] == '*' || opp->board_[row][col] == 'H') {
-      printf("\nYou've already entered this coordinate. Please try again.\n");
-    }
+  else if (opp->board_[row][col] == '*' || opp->board_[row][col] == 'H') {
+    printf("\nYou've already entered this coordinate. Please try again.\n");
+  }
 
-    else {
-      opp->board_[row][col] = 'H';
-      printf("\nYou've hit a ship! It is now your opponent's turn.\n");
-    }
+  else {
+    opp->board_[row][col] = 'H';
+    printf("\nYou've hit a ship! It is now your opponent's turn.\n");
+  }
 
 }
 
@@ -356,9 +325,11 @@ int main(int argc, char ** argv) {
   //network setup
   int player_num;
   int address = 0;
-  while(!(player_num = player(argc, argv))){
+  player_num = player(argc, argv);
+  //wait for both to be ready first?
+  while(!(connect(player_num, address))){
+
   }
-  connect(player_num, address);
 
   printf("\e[8;21;68;t");
 
