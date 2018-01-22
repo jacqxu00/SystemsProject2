@@ -460,7 +460,7 @@ int main(int argc, char ** argv) {
 	
 	while (!game_over(home, opponent)) {
 		display(home, opponent);
-		if (turn == player_num) {
+		if (turn % 2 == player_num % 2) {
 			while(!parse_missile(&miss_c, &miss_r, home, opponent)) {	
 			}
 		  if (player_num == 1) {
@@ -470,6 +470,7 @@ int main(int argc, char ** argv) {
 		  }
 			place_missile(miss_c, miss_r, opponent);
 		}
+		turn++;
 	}
 
 	
