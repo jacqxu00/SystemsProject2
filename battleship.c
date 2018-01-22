@@ -324,12 +324,43 @@ int main(int argc, char ** argv) {
 
   //network setup
   int player_num;
-  int address = 0;
+  int listen_socket; //for player 1
+  int client_socket; //for player 1
+  int server_socket; //for player 2
+  char * address = argv[2];
+  printf("%s", address);
+  
   player_num = player(argc, argv);
+  //close(server_socket);
+  //close(listen_socket);
+  //close(client_socket);
   //wait for both to be ready first?
-  while(!(connect(player_num, address))){
-
-  }
+  connecting(player_num, address, &listen_socket, &client_socket, &server_socket);
+	
+  /*
+    printf("TESTING\n");
+	
+    char buffer[256];
+	
+    if (player_num == 2) {
+    printf("enter data: ");
+    fgets(buffer, sizeof(buffer), stdin);
+    write(server_socket, buffer, sizeof(buffer));
+    read(server_socket, buffer, sizeof(buffer));
+    printf("received: [%s]\n", buffer);
+    }
+    else {
+    while(read(client_socket, buffer, sizeof(buffer))) {
+    printf("[subserver %d] received: [%s]\n", getpid(), buffer);
+    write(client_socket, buffer, sizeof(buffer));
+			
+    return 0;
+    }
+    }
+    close(client_socket);
+    //close(server_socket);
+    //close(listen_socket);
+    */
 
   printf("\e[8;21;68;t");
 
@@ -387,6 +418,26 @@ int main(int argc, char ** argv) {
   }
 
   //receive opponent board
+  char bufferSend[8][8];
+  int i, j;
+  for (i = 0; i < home->rows; i++) {
+    for (j = 0; j < home->cols; j++) {
+      bufferSend[i][j] = home->board_[i][j];
+    }
+  }
+  if (player_num == 1) {
+    write(client_socket, bufferSend, sizeof(bufferSend));
+    read(client_socket, bufferSend, sizeof(bufferSend));
+  } else {
+    write(server_socket, bufferSend, sizeof(bufferSend));
+    read(server_socket, bufferSend, sizeof(bufferSend));
+  }
+	
+  for (i = 0; i < home->rows; i++) {
+    for (j = 0; j < home->cols; j++) {
+      opponent->board_[i][j] = bufferSend[i][j];
+    }
+  }
 
   //playing instructions
   int start_play = 0;
@@ -418,6 +469,9 @@ int main(int argc, char ** argv) {
   else if (game_over(home, opponent) == 2) {
     printf("\nCONGRATULATIONS! You've won!\n");
   }
+  close(client_socket);
+  //close(listen_socket);
+  //close(server_socket);
 
   return 0;
 }
