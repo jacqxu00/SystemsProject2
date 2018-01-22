@@ -335,6 +335,7 @@ int main(int argc, char ** argv) {
   //wait for both to be ready first?
   connecting(player_num, address, &listen_socket, &client_socket, &server_socket);
 	
+	/*
 	printf("TESTING\n");
 	
 	char buffer[256];
@@ -350,13 +351,14 @@ int main(int argc, char ** argv) {
 		while(read(client_socket, buffer, sizeof(buffer))) {
 			printf("[subserver %d] received: [%s]\n", getpid(), buffer);
 			write(client_socket, buffer, sizeof(buffer));
-			close(client_socket);
+			
 			return 0;
 		}
 	}
-	close(server_socket);
-	close(listen_socket);
-	/*
+	close(client_socket);
+	//close(server_socket);
+	//close(listen_socket);
+	*/
 
   printf("\e[8;21;68;t");
 
@@ -414,6 +416,26 @@ int main(int argc, char ** argv) {
   }
 
   //receive opponent board
+	char bufferSend[8][8];
+  int i, j;
+  for (i = 0; i < home->rows; i++) {
+    for (j = 0; j < home->cols; j++) {
+      bufferSend[i][j] = home->board_[i][j];
+    }
+  }
+	if (player_num == 1) {
+		write(client_socket, bufferSend, sizeof(bufferSend));
+		read(client_socket, bufferSend, sizeof(bufferSend));
+	} else {
+		write(server_socket, bufferSend, sizeof(bufferSend));
+		read(server_socket, bufferSend, sizeof(bufferSend));
+	}
+	
+  for (i = 0; i < home->rows; i++) {
+    for (j = 0; j < home->cols; j++) {
+      opponent->board_[i][j] = bufferSend[i][j];
+    }
+  }
 
   //playing instructions
   int start_play = 0;
@@ -448,7 +470,6 @@ int main(int argc, char ** argv) {
   close(client_socket);
   //close(listen_socket);
   //close(server_socket);
-	*/
 
   return 0;
 }
