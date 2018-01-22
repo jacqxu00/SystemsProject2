@@ -10,6 +10,9 @@ run_1: all
 run_2: all
 	./battleship 2 149.89.151.100
 
+run_2_local: all
+	./battleship 2 127.0.0.1
+
 clean:
 	rm -rf battleship
 
