@@ -328,9 +328,9 @@ int main(int argc, char ** argv) {
   char * address = argv[2];
   
   player_num = player(argc, argv);
-	close(server_socket);
-	close(listen_socket);
-	close(client_socket);
+	//close(server_socket);
+	//close(listen_socket);
+	//close(client_socket);
   //wait for both to be ready first?
   connecting(player_num, address, &listen_socket, &client_socket, &server_socket);
 	
