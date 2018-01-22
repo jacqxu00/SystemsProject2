@@ -8,7 +8,7 @@ run_1: all
 	./battleship 1
 
 run_2: all
-	./battleship 2 placeholder
+	./battleship 2 149.89.151.100
 
 clean:
 	rm -rf battleship
