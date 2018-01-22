@@ -263,7 +263,7 @@ void place_ship (char ship, char col, char row, char dir, struct board * home, c
 
 int parse_missile (char * col_p, char * row_p, struct board * home, struct board * opp) {
 
-  char buffer[256];
+  char buffer[2];
 
   printf("\n\nEnter a coordinate to hit (e.g. 'A0'): ");
   fgets(buffer, sizeof(buffer), stdin);
@@ -454,6 +454,26 @@ int main(int argc, char ** argv) {
   //playing phase
   char miss_c;
   char miss_r;
+	int turn = 1; // player 1 - 1; player 2 - 2
+	
+	char bufferCoor[2];
+	
+	while (!game_over(home, opponent)) {
+		display(home, opponent);
+		if (turn == player_num) {
+			while(!parse_missile(&miss_c, &miss_r, home, opponent)) {	
+			}
+		  if (player_num == 1) {
+		    write(client_socket, bufferCoor, sizeof(bufferCoor));
+		  } else {
+		    write(server_socket, bufferCoor, sizeof(bufferCoor));
+		  }
+			place_missile(miss_c, miss_r, opponent);
+		}
+	}
+
+	
+	/*
   //while (!game_over(home, opponent) && start_play) {
   while (1) {
     display(home, opponent);
@@ -461,6 +481,7 @@ int main(int argc, char ** argv) {
     }
     place_missile(miss_c, miss_r, opponent);
   }
+	*/
 
   //game over
   if (game_over(home, opponent) == 1) {
