@@ -322,12 +322,14 @@ int main(int argc, char ** argv) {
 
   //network setup
   int player_num;
-  int address = 0;
+  int listen_socket; //for player 1
+  int client_socket; //for player 1
+  int server_socket; //for player 2
+  char * address;
+  
   player_num = player(argc, argv);
   //wait for both to be ready first?
-  while(!(connect(player_num, address))){
-
-  }
+  connect(player_num, address, &listen_socket, &client_socket, &server_socket);
 
   printf("\e[8;21;68;t");
 
