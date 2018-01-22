@@ -326,6 +326,7 @@ int main(int argc, char ** argv) {
   int client_socket; //for player 1
   int server_socket; //for player 2
   char * address = argv[2];
+	printf("%s", address);
   
   player_num = player(argc, argv);
 	//close(server_socket);
