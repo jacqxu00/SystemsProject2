@@ -16,13 +16,13 @@ clean:
 networking_setup.o: networking_setup.c networking.h
 	gcc -c networking_setup.c
 
-networking.o: networking.c battleship.h
+networking.o: networking.c networking.h
 	gcc -c networking.c
 
 battleship.o: battleship.c battleship.h
 	gcc -c battleship.c
 
-compile_debug: networking_setup.c networking.c battleship.c battleship.h
+compile_debug: networking_setup.c networking.c networking.h battleship.c battleship.h
 	gcc -g -o battleship_debug networking_setup.c networking.c battleship.c
 
 run_valgrind_1: compile_debug
@@ -40,5 +40,5 @@ run_gdb_1: compile_debug
 run_gdb_2: compile_debug
 	gdb battleship_debug 2 149.89.151.100
 
-run_gdb_2: compile_debug
+run_gdb_2_local: compile_debug
 	gdb battleship_debug 2 127.0.0.1
