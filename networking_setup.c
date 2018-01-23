@@ -15,6 +15,11 @@ int server_setup (char * address) {
   error_check(sd, "server socket");
   printf("[server] socket created\n");
 
+  //allow reuse of address
+  int enable = 1;
+  setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
+  setsockopt(sd, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(int));
+
   //setup structs for getaddrinfo
   struct addrinfo * hints, * results;
   hints = (struct addrinfo *)calloc(1, sizeof(struct addrinfo));

@@ -1,5 +1,26 @@
 #include "battleship.h"
 
+int listen_socket; //for player 1
+int client_socket; //for player 1
+int server_socket; //for player 2
+
+static void sighandler(int signo){
+  if(signo == SIGINT){
+    printf("player has been interrupted \n");
+    close(client_socket);
+    close(listen_socket);
+    close(server_socket);
+    exit(0);
+  }
+  if(signo == SIGSEGV){
+    printf("player has been interrupted \n");
+    close(client_socket);
+    close(listen_socket);
+    close(server_socket);
+    exit(0);
+  }
+}
+
 void pretty_spacing(int x) {
   int i;
   for (i = 0; i < x; i ++) {
@@ -321,12 +342,14 @@ int game_over (struct board * home, struct board * opp) {
 }
 
 int main(int argc, char ** argv) {
+  signal(SIGINT, sighandler);
+  signal(SIGSEGV, sighandler);
 
   //network setup
   int player_num;
-  int listen_socket; //for player 1
-  int client_socket; //for player 1
-  int server_socket; //for player 2
+  //int listen_socket; //for player 1
+  //int client_socket; //for player 1
+  //int server_socket; //for player 2
   char * address = argv[2];
   printf("%s", address);
   
