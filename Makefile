@@ -40,5 +40,5 @@ run_gdb_1: compile_debug
 run_gdb_2: compile_debug
 	gdb battleship_debug 2 149.89.151.100
 
-run_gdb_2_local: compile_debug
+run_gdb_2: compile_debug
 	gdb battleship_debug 2 127.0.0.1
