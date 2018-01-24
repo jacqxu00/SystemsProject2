@@ -93,5 +93,5 @@ kangY -- 2018-01-24 11:51
 	added print statements for player's turns
 
 XuJ -- 2018-01-24 14:21
-	revised display so for clarity and to know whose turn it is
+	revised display so for clarity, and displays which ship has been hit
 	revised the code that checks that missile coordinates have not been entered before
