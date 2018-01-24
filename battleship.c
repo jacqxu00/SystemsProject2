@@ -367,36 +367,7 @@ int main(int argc, char ** argv) {
   printf("%s", address);
   
   player_num = player(argc, argv);
-  //close(server_socket);
-  //close(listen_socket);
-  //close(client_socket);
-  //wait for both to be ready first?
   connecting(player_num, address, &listen_socket, &client_socket, &server_socket);
-	
-  /*
-    printf("TESTING\n");
-	
-    char buffer[256];
-	
-    if (player_num == 2) {
-    printf("enter data: ");
-    fgets(buffer, sizeof(buffer), stdin);
-    write(server_socket, buffer, sizeof(buffer));
-    read(server_socket, buffer, sizeof(buffer));
-    printf("received: [%s]\n", buffer);
-    }
-    else {
-    while(read(client_socket, buffer, sizeof(buffer))) {
-    printf("[subserver %d] received: [%s]\n", getpid(), buffer);
-    write(client_socket, buffer, sizeof(buffer));
-			
-    return 0;
-    }
-    }
-    close(client_socket);
-    //close(server_socket);
-    //close(listen_socket);
-    */
 
   printf("\e[8;21;68;t");
 
@@ -490,7 +461,7 @@ int main(int argc, char ** argv) {
   //playing phase
   char miss_c;
   char miss_r;
-  int turn = 1; // player 1 - 1; player 2 - 2
+  int turn = 1;
 	
   char bufferCoor[2];
 	
@@ -500,28 +471,26 @@ int main(int argc, char ** argv) {
       display(home, opponent);
       while(!parse_missile(&miss_c, &miss_r, home, opponent)) {	
       }
-      //printf("\nHELLOooooOooOOo\n");
-      place_missile(miss_c, miss_r, opponent);
+      //place_missile(miss_c, miss_r, opponent);
       if (player_num == 1) {
 	write(client_socket, bufferCoor, sizeof(bufferCoor));
       } else {
 	write(server_socket, bufferCoor, sizeof(bufferCoor));
       }
       printf("%d turn ended\n", turn);
-      turn++;		
+      //turn++;		
+    }else{
+      //read
+      if (player_num == 1) {
+	read(client_socket, bufferCoor, sizeof(bufferCoor));
+      } else {
+	read(server_socket, bufferCoor, sizeof(bufferCoor));
+      }
+      printf("%d turn ended\n", turn);
     }
+    place_missile(miss_c, miss_r, opponent);
+    turn++;
   }
-
-	
-  /*
-  //while (!game_over(home, opponent) && start_play) {
-  while (1) {
-  display(home, opponent);
-  while(!parse_missile(&miss_c, &miss_r, home, opponent)){
-  }
-  place_missile(miss_c, miss_r, opponent);
-  }
-  */
 
   //game over
   if (game_over(home, opponent) == 1) {
@@ -531,8 +500,8 @@ int main(int argc, char ** argv) {
     printf("\nCONGRATULATIONS! You've won!\n");
   }
   close(client_socket);
-  //close(listen_socket);
-  //close(server_socket);
+  close(listen_socket);
+  close(server_socket);
 
   return 0;
 }
