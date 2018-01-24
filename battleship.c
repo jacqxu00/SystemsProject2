@@ -478,6 +478,7 @@ int main(int argc, char ** argv) {
 	write(server_socket, bufferCoor, sizeof(bufferCoor));
       }
       printf("%d turn ended\n", turn);
+      place_missile(miss_c, miss_r, opponent);
       //turn++;		
     }else{
       //read
@@ -486,9 +487,9 @@ int main(int argc, char ** argv) {
       } else {
 	read(server_socket, bufferCoor, sizeof(bufferCoor));
       }
+      place_missile(miss_c, miss_r, home);
       printf("%d turn ended\n", turn);
     }
-    place_missile(miss_c, miss_r, opponent);
     turn++;
   }
 
