@@ -66,11 +66,11 @@ xuJ -- 2018-01-18 10:52
 
 xuJ -- 2018-01-19 10:43
 	completed the README file
-	
+
 chenW -- 2018-01-20 23:46
 	fixed merge conflicts and looping print
 	split code and started networking files
-	
+
 kangY -- 2018-01-21 22:58
 	edited the README file (added instructions & period, fixed format)
 
@@ -80,15 +80,18 @@ kangY, chenW -- 2018-01-22 13:51
 kangY, chenW -- 2018-01-22 15:14
 	fixed the seg fault
 	worked on playing phase (still need to continue and finish)
-	
+
 kangY, chenW -- 2018-01-23 13:20
 	fixed seg fault
 	fixed printing opponent board
 
 chenW -- 2018-01-23 23:31
 	finished reading and turn-taking in playing phase
-	
+
 kangY -- 2018-01-24 11:51
 	edited format of code
 	added print statements for player's turns
-	
+
+XuJ -- 2018-01-24 14:21
+	revised display so for clarity and to know whose turn it is
+	revised the code that checks that missile coordinates have not been entered before

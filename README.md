@@ -38,6 +38,7 @@ You will be asked to input the ship, the starting coordinates of the location, a
   * A: aircraft, size 5
   * B: battleship, size 4
   * C: cruiser, size 3
+  * S: submarine, size 3
   * D: destroyer, size 2
 2. the letter and digit corresponding to the column and the row
 3. the letter representing the direction
@@ -50,9 +51,9 @@ For example: S A0 D will place a submarine occupying A0, A1, and A2
 
 ### Playing Phase
 
-You will be asked to input the coordinates of the location you would
-like to send a missile to.
+You will be asked to input the coordinates of the location you would like to send a missile to.
 * For example: A0
+If you hit a ship, you will be told which ship you've hit.
 
 Here is what the board display means:
 * `.` (empty slot)

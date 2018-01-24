@@ -6,14 +6,14 @@ int server_socket; //for player 2
 
 static void sighandler (int signo) {
 	if (signo == SIGINT) {
-		printf("player has been interrupted\n");
+		printf("Player has been interrupted.\n");
 		close(client_socket);
 		close(listen_socket);
 		close(server_socket);
 		exit(0);
 	}
 	if (signo == SIGSEGV) {
-		printf("player has been interrupted\n");
+		printf("Player has been interrupted.\n");
 		close(client_socket);
 		close(listen_socket);
 		close(server_socket);
@@ -186,11 +186,19 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
 int missile_valid (char col, char row, struct board * home, struct board * opp){
 	int c = col - 'A';
 	int r = row - '0';
+
 	if (c < 0 || c > 7 || r < 0 || r > 9) {
 		display(home, opp);
 		printf("\nERROR: Coordinate out of bounds, please try again.\n");
 		return 0;
 	}
+
+	else if (opp->board_[r][c] == 'H' || opp->board_[r][c] == '*') {
+		display(home, opp);
+		printf("\nERROR: You've already entered this coordinate, please try again.\n");
+		return 0;
+	}
+
 	return 1;
 }
 
@@ -203,7 +211,7 @@ int parse_ship (char * ship_p, char * col_p, char * row_p, char * dir_p, struct 
 	for (i = 0; i < 5; i++) {
 		printf("%s\n\t\t     ", shipP[i]);
 	}
-	
+
 	//ship + size
 	printf("\n\nEnter ship (A, B, C, D, S): ");
 	fgets(buffer, sizeof(buffer), stdin);
@@ -286,12 +294,11 @@ int parse_missile (char * col_p, char * row_p, struct board * home, struct board
 	*strchr(buffer, '\n') = 0;
 	int scanned = sscanf(buffer, "%c%c", col_p, row_p);
 	//printf("buffer: %s", buffer);
-	
+
 	//printf("scanned int: %d\n", scanned);
 
 	if (scanned != 2){
 		display(home, opp);
-		printf("\nHELLO\n");
 		printf("\nERROR: coordinate invalid, please try again. \n");
 		return 0;
 	}
@@ -299,31 +306,48 @@ int parse_missile (char * col_p, char * row_p, struct board * home, struct board
 	return missile_valid(*col_p, *row_p, home, opp);
 }
 
-void place_missile (char col, char row, struct board * opp, int attacking) {
+void place_missile (char col, char row, struct board * opp, int attacking, char * string) {
 	int c = col - 'A';
 	int r = row - '0';
-	
+
 	if (opp->board_[r][c] == '.') {
 		opp->board_[r][c] = '*';
 		if (attacking) {
-			printf("You've missed. It is now your opponent's turn.\n");
-		} 
+			string = "You've missed. It is now your opponent's turn.\n";
+		}
 		else {
-			printf("Your opponent has missed. It is now your turn.\n");
+			string = "Your opponent has missed. It is now your turn.\n";
 		}
 	}
-	else if (opp->board_[r][c] == '*' || opp->board_[r][c] == 'H') {
-		if (attacking) {
-			printf("You've already entered this coordinate. Please try again.\n");
-		}
-	}
+
 	else {
+		char current = opp->board_[r][c];
 		opp->board_[r][c] = 'H';
+		char * shipname = "";
+		int shipsize = 0;
+
+		if (current == 'A') {
+			shipname = "Aircraft";
+			shipsize = 5;
+		} else if (current == 'B') {
+			shipname = "Battleship";
+			shipsize = 4;
+		} else if (current == 'C') {
+			shipname = "Cruiser";
+			shipsize = 3;
+		} else if (current == 'D') {
+			shipname = "Destroyer";
+			shipsize = 2;
+		} else if (current == 'S') {
+			shipname = "Submarine";
+			shipsize = 3;
+		}
+
 		if (attacking) {
-			printf("\nYou've hit a ship! It is now your opponent's turn.\n");
-		} 
+			sprintf(string, "You've hit your opponent's %s (size %d)! It is now your\nopponent's turn.\n", shipname, shipsize);
+		}
 		else {
-			printf("\nYour ship's been hit! It is now your turn.\n");
+			sprintf(string, "Your %s's been hit! It is now your turn.\n", shipname);
 		}
 	}
 }
@@ -359,11 +383,11 @@ int main(int argc, char ** argv) {
 	//int server_socket; //for player 2
 	char * address = argv[2];
 	printf("%s", address);
-  
+
 	player_num = player(argc, argv);
 	connecting(player_num, address, &listen_socket, &client_socket, &server_socket);
 
-	printf("\e[8;21;68;t");
+	printf("\e[8;25;68;t");
 
 	//instructions
 	int start_setup = 0;
@@ -393,7 +417,7 @@ int main(int argc, char ** argv) {
 
 	struct board *home = create_board(8, 8);
 	struct board *opponent = create_board(8, 8);
-	
+
 	char shipPlace[6][13];
 	strcpy(shipPlace[0], "A (size 5)");
 	strcpy(shipPlace[1], "B (size 4)");
@@ -417,8 +441,9 @@ int main(int argc, char ** argv) {
 		place_ship(ship, col, row, dir, home, shipPlace);
 		ships_placed++;
 	}
-	
-	printf("\nWaiting for other player to finish placing ships...\n");
+
+	display(home, opponent);
+	printf("\n\n\nWaiting for other player to finish placing ships...\n");
 
 	//receive opponent board
 	char bufferSend[8][8];
@@ -431,12 +456,12 @@ int main(int argc, char ** argv) {
 	if (player_num == 1) {
 		write(client_socket, bufferSend, sizeof(bufferSend));
 		read(client_socket, bufferSend, sizeof(bufferSend));
-	} 
+	}
 	else {
 		write(server_socket, bufferSend, sizeof(bufferSend));
 		read(server_socket, bufferSend, sizeof(bufferSend));
 	}
-	
+
 	for (i = 0; i < home->rows; i++) {
 		for (j = 0; j < home->cols; j++) {
 			opponent->board_[i][j] = bufferSend[i][j];
@@ -459,25 +484,28 @@ int main(int argc, char ** argv) {
 	char miss_c;
 	char miss_r;
 	int turn = 1;
-	
+	char displayString[256];
+
 	char bufferCoor[2];
-	
-	while (!game_over(home, opponent)) {
+
+	while (!game_over(home, opponent) && start_play) {
 		display(home, opponent);
+		printf("\n\n");
+		printf(displayString);
 		if (turn % 2 == player_num % 2) {
 			printf("\nYour turn, player %d\n", player_num);
-			while(!parse_missile(&miss_c, &miss_r, home, opponent)) {	}
+			while(!parse_missile(&miss_c, &miss_r, home, opponent)) {}
 			bufferCoor[0] = miss_c;
 			bufferCoor[1] = miss_r;
 			if (player_num == 1) {
 				write(client_socket, bufferCoor, sizeof(bufferCoor));
-			} 
+			}
 			else {
 				write(server_socket, bufferCoor, sizeof(bufferCoor));
 			}
 			//printf("%d turn ended\n", turn);
-			place_missile(miss_c, miss_r, opponent, 1);
-			//turn++;		
+			place_missile(miss_c, miss_r, opponent, 1, &displayString);
+			//turn++;
 		}
 		else {
 			//read
@@ -493,7 +521,7 @@ int main(int argc, char ** argv) {
 			miss_c = bufferCoor[0];
 			miss_r = bufferCoor[1];
 			//printf("miss_c: %c \tmiss_r: %c\n", miss_c, miss_r);
-			place_missile(miss_c, miss_r, home, 0);
+			place_missile(miss_c, miss_r, home, 0, &displayString);
 			//printf("%d turn ended\n", turn);
 		}
 		turn++;
@@ -506,7 +534,7 @@ int main(int argc, char ** argv) {
 	else if (game_over(home, opponent) == 2) {
 		printf("\nCONGRATULATIONS! You've won!\n");
 	}
-	
+
 	close(client_socket);
 	close(listen_socket);
 	close(server_socket);
