@@ -476,7 +476,8 @@ int main(int argc, char ** argv) {
       printf("Your turn, player %d\n", player_num);
       while(!parse_missile(&miss_c, &miss_r, home, opponent)) {	
       }
-      //place_missile(miss_c, miss_r, opponent);
+      bufferCoor[0] = miss_c;
+      bufferCoor[1] = miss_r;
       if (player_num == 1) {
 	write(client_socket, bufferCoor, sizeof(bufferCoor));
       } else {
@@ -487,11 +488,18 @@ int main(int argc, char ** argv) {
       //turn++;		
     }else{
       //read
+      printf("before reading\n");
       if (player_num == 1) {
 	read(client_socket, bufferCoor, sizeof(bufferCoor));
       } else {
 	read(server_socket, bufferCoor, sizeof(bufferCoor));
       }
+      //parse bufferCoor into miss_c & miss_r
+      printf("after reading\n");
+      printf("bufferCoor: %s\n", bufferCoor);
+      miss_c = bufferCoor[0];
+      miss_r = bufferCoor[1];
+      printf("miss_c: %c \tmiss_r: %c\n", miss_c, miss_r);
       place_missile(miss_c, miss_r, home, 0);
       printf("%d turn ended\n", turn);
     }
