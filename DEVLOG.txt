@@ -84,3 +84,7 @@ kangY, chenW -- 2018-01-22 15:14
 kangY, chenW -- 2018-01-23 13:20
 	fixed seg fault
 	fixed printing opponent board
+
+chenW -- 2018-01-23 23:31
+	finished reading and turn-taking in playing phase
+	
