@@ -304,31 +304,36 @@ int parse_missile (char * col_p, char * row_p, struct board * home, struct board
   return missile_valid(*col_p, *row_p, home, opp);
 }
 
-void place_missile (char col, char row, struct board * opp) {
+void place_missile (char col, char row, struct board * opp, int attacking) {
 
   int c = col - 'A';
   int r = row - '0';
 	
-  //printf("testetsttest\n");
   if (opp->board_[r][c] == '.') {
-    //printf("test1\n");
     opp->board_[r][c] = '*';
-    //printf("bye\n");
-    printf("\nYou've missed. It is now your opponent's turn.\n");
+    if(attacking){
+      printf("\nYou've missed. It is now your opponent's turn.\n");
+    }else{
+      printf("\nYour opponent has missed. It is now your turn.\n");
+    }
   }
 
   else if (opp->board_[r][c] == '*' || opp->board_[r][c] == 'H') {
-    //printf("test2\n");
-    printf("\nYou've already entered this coordinate. Please try again.\n");
+    if(attacking){
+      printf("\nYou've already entered this coordinate. Please try again.\n");
+    }
   }
 
   else {
     //printf("test3\n");
     opp->board_[r][c] = 'H';
     //printf("test4\n");
-    printf("\nYou've hit a ship! It is now your opponent's turn.\n");
+    if(attacking){
+      printf("\nYou've hit a ship! It is now your opponent's turn.\n");
+    }else{
+      printf("\nYour ship's been hit! It is now your turn.\n");
+    }
   }
-
 }
 
 int player_loss (struct board * home) {
@@ -478,7 +483,7 @@ int main(int argc, char ** argv) {
 	write(server_socket, bufferCoor, sizeof(bufferCoor));
       }
       printf("%d turn ended\n", turn);
-      place_missile(miss_c, miss_r, opponent);
+      place_missile(miss_c, miss_r, opponent, 1);
       //turn++;		
     }else{
       //read
@@ -487,7 +492,7 @@ int main(int argc, char ** argv) {
       } else {
 	read(server_socket, bufferCoor, sizeof(bufferCoor));
       }
-      place_missile(miss_c, miss_r, home);
+      place_missile(miss_c, miss_r, home, 0);
       printf("%d turn ended\n", turn);
     }
     turn++;
