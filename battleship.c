@@ -471,9 +471,9 @@ int main(int argc, char ** argv) {
   char bufferCoor[2];
 	
   while (!game_over(home, opponent)) {
+    display(home, opponent);
     if (turn % 2 == player_num % 2) {
       printf("Your turn, player %d\n", player_num);
-      display(home, opponent);
       while(!parse_missile(&miss_c, &miss_r, home, opponent)) {	
       }
       //place_missile(miss_c, miss_r, opponent);
