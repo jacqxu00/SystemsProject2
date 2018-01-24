@@ -88,3 +88,7 @@ kangY, chenW -- 2018-01-23 13:20
 chenW -- 2018-01-23 23:31
 	finished reading and turn-taking in playing phase
 	
+kangY -- 2018-01-24 11:51
+	edited format of code
+	added print statements for player's turns
+	
