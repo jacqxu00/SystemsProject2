@@ -142,7 +142,7 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
 		}
 	}
 	else if (dir == 'U') {
-		if (!(r - (len - 1) >= 7)) {
+		if (!(r - (len - 1) >= 0)) {
 			display(home, opp);
 			printf("\nERROR: Out-of-bounds, please try again.\n");
 			return 0;
