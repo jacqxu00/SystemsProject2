@@ -60,3 +60,6 @@ Here is what the board display means:
 * `.` (empty slot)
 * `*` (missed ship)
 * `H` (hit ship)
+
+### Minor Bugs
+* There is occasionally a weird 0 0 0 1 symbol on one of the screens. 
