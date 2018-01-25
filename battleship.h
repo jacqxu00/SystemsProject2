@@ -38,9 +38,9 @@ struct destroyer {
   char coor[256];
 };
 struct board {
-	int rows;
-	int cols;
-	char **board_;
+  int rows;
+  int cols;
+  char **board_;
 };
 
 struct aircraft *create_aircraft (char name, int size) {
@@ -97,16 +97,20 @@ struct board *create_board (int rows, int cols) {
 
 //function headers
 static void sighandler (int signo);
-void pretty_spacing (int x);
 void initialize_board (struct board * home);
+
+void pretty_spacing (int x);
 void print_board (struct board * home, struct board * opp, int row);
 void display (struct board * home, struct board * opp);
+
 int placement_valid (char ship, char col, char row, char dir, struct board * home, struct board * opp, char shipP[6][13]);
-int missile_valid (char col, char row, struct board * home, struct board * opp);
 int parse_ship (char * ship_p, char * col_p, char * row_p, char * dir_p, struct board * home, struct board * opp, char shipP[6][13]);
 void place_ship (char ship, char col, char row, char dir, struct board * home, char shipP[6][13]);
+
+int missile_valid (char col, char row, struct board * home, struct board * opp);
 int parse_missile (char * col_p, char * row_p, struct board * home, struct board * opp);
 void place_missile (char col, char row, struct board * opp, int attacking, char * string);
+
 int player_loss (struct board * home);
 int game_over (struct board * home, struct board * opp);
 
