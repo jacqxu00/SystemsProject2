@@ -7,6 +7,7 @@ PLAYER 1 INSTRUCTIONS
 1. Open up the terminal.
 2. Follow these instructions:
 ```
+$ hostname -I // give PLAYER 2 the IP address
 $ git clone https://github.com/jacqxu00/SystemsProject2.git
 $ cd SystemsProject2
 $ make run_1
@@ -23,8 +24,6 @@ $ make all
 $ ./battleship 2 [PLAYER 1'S IP ADDRESS]
 ```
 3. Have fun!
-
-* To get PLAYER 1's IP ADDRESS, in the terminal, do `$ ifconfig` and it should be the inet addr.
 
 ## Playing Instructions
 There is a setup phase in which you place your ships, then a playing phase in which you and your opponent begin competing. All standard Battleship rules apply. Syntax (aka player input) instructions are also displayed in the game.

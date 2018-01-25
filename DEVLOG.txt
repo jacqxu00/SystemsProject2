@@ -98,3 +98,13 @@ xuJ -- 2018-01-24 14:21
 
 xuJ -- 2018-01-25 14:05
 	made the board colorful and fixed the messages printed during gameplay
+	
+chenW, kangY, xuJ -- 2018-01-25 15:17
+	fixed out-of-bound errors for both ship placement and missile placement
+	fixed format
+	
+chenW, kangY, xuJ -- 2018-01-25 15:42
+	added function headers in battleship.h
+	added comments
+	cleaned up code
+	fixed format

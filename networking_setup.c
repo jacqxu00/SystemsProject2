@@ -1,5 +1,8 @@
 #include "networking.h"
 
+// code credit to Mr. DW
+// altered and added a few lines so that it would work with our code
+
 void error_check (int i, char *s) { //modify behavior after testing
   if (i < 0) {
     printf("[%s] error %d: %s\n", s, errno, strerror(errno));
