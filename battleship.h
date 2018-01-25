@@ -88,4 +88,11 @@ struct board *create_board (int rows, int cols) {
   return b;
 }
 
-//function headers
+//colors
+#define WATER	"\e[38;2;200;200;200m\e[48;2;0;0;255m"
+#define HIT	"\e[38;2;200;200;200m\e[48;2;255;0;0m"
+#define MISS	"\e[38;2;100;100;100m\e[48;2;255;255;255m"
+#define SHIP	"\e[38;2;255;255;255m\e[48;2;0;200;0m"
+#define RESET	"\e[0m"
+
+

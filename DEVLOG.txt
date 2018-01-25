@@ -92,6 +92,9 @@ kangY -- 2018-01-24 11:51
 	edited format of code
 	added print statements for player's turns
 
-XuJ -- 2018-01-24 14:21
+xuJ -- 2018-01-24 14:21
 	revised display so for clarity, and displays which ship has been hit
 	revised the code that checks that missile coordinates have not been entered before
+
+xuJ -- 2018-01-25 14:05
+	made the board colorful and fixed the messages printed during gameplay

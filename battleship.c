@@ -43,7 +43,12 @@ void print_board (struct board * home, struct board * opp, int row) {
 	printf("            %d ", row);
 	int c;
 	for (c = 0; c < home->cols; c++) {
-		printf("%c ", home->board_[row][c]);
+	  	char coord = home->board_[row][c];
+		
+		if (coord == '.') { printf(WATER ". " RESET); }
+		else if (coord == 'H') { printf(HIT "H " RESET); }
+		else if (coord == '*') { printf(MISS "* " RESET); }
+		else { printf(SHIP "%c " RESET, coord); }
 	}
 	printf("          ");
 
@@ -51,17 +56,12 @@ void print_board (struct board * home, struct board * opp, int row) {
 	printf("%d ", row);
 	int d;
 	for (d = 0; d < opp->cols; d++) {
-		int coor = opp->board_[row][d] - 'A';
+		int coor = opp->board_[row][d];
 
-		//hide location of unhit ship
-		if (coor >= 0 && coor <= 25 && coor !=7) {
-			printf("%c ", '.');
-		}
-
-		//else print the character of the 2d array
-		else {
-			printf("%c ", opp->board_[row][d]);
-		}
+		if (coor == '.') { printf(WATER ". " RESET); }
+		else if (coor == 'H') { printf(HIT "H " RESET); }
+		else if (coor == '*') { printf(MISS "* " RESET); }
+		else { printf(WATER ". " RESET); }
 
 	}
 	printf("\n");
@@ -313,10 +313,10 @@ void place_missile (char col, char row, struct board * opp, int attacking, char 
 	if (opp->board_[r][c] == '.') {
 		opp->board_[r][c] = '*';
 		if (attacking) {
-			string = "You've missed. It is now your opponent's turn.\n";
+		        sprintf(string, "You've missed. It is now your opponent's turn.\n");
 		}
 		else {
-			string = "Your opponent has missed. It is now your turn.\n";
+		        sprintf(string, "Your opponent has missed. It is now your turn.\n");
 		}
 	}
 
