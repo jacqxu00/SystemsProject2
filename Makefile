@@ -5,7 +5,7 @@ run_1: all
 	./battleship 1
 
 run_2: all
-	./battleship 2
+	./battleship 2 149.89.150.110
 
 run_2_local: all
 	./battleship 2 127.0.0.1
