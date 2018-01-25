@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
+#include <ctype.h>
 
 //long messages
 #define WELCOME_MSG "\n\n\nHello, and welcome to Battleship! \nFirst, we will begin with a setup phase (where you will be asked to place your ships), then we will continue to the playing phase (where\nyou compete with your opponent). \nAll standard Battleship rules apply, but we will explain the syntax of our terminal game. \n\nPress enter to continue.\n"

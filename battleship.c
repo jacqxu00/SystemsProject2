@@ -202,6 +202,7 @@ int parse_ship (char * ship_p, char * col_p, char * row_p, char * dir_p, struct 
 	fgets(buffer, sizeof(buffer), stdin);
 	*strchr(buffer, '\n') = 0;
 	int scanned = sscanf(buffer, "%c", ship_p);
+	*ship_p = toupper(*ship_p);
 
 	if (scanned != 1) {
 		display(home, opp);
@@ -214,6 +215,7 @@ int parse_ship (char * ship_p, char * col_p, char * row_p, char * dir_p, struct 
 	fgets(buffer, sizeof(buffer), stdin);
 	*strchr(buffer, '\n') = 0;
 	scanned = sscanf(buffer, "%c%c", col_p, row_p);
+	*col_p = toupper(*col_p);
 
 	if (scanned != 2) {
 		display(home, opp);
@@ -226,6 +228,7 @@ int parse_ship (char * ship_p, char * col_p, char * row_p, char * dir_p, struct 
 	fgets(buffer, sizeof(buffer), stdin);
 	*strchr(buffer, '\n') = 0;
 	scanned = sscanf(buffer, "%c", dir_p);
+	*dir_p = toupper(*dir_p);
 
 	if (scanned != 1) {
 		display(home, opp);
@@ -308,6 +311,7 @@ int parse_missile (char * col_p, char * row_p, struct board * home, struct board
 	fgets(buffer, sizeof(buffer), stdin);
 	*strchr(buffer, '\n') = 0;
 	int scanned = sscanf(buffer, "%c%c", col_p, row_p);
+	*col_p = toupper(*col_p);
 
 	// checks if missile coordinate input is valid
 	if (scanned != 2){
@@ -517,7 +521,7 @@ int main(int argc, char ** argv) {
 	while (!game_over(home, opponent) && start_play) {
 		display(home, opponent);
 		printf("\n\n");
-		printf(displayString);
+		printf("%s", displayString);
 		
 		// players take turns
 		if (turn % 2 == player_num % 2) {
