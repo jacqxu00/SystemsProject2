@@ -121,26 +121,10 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
 	else if (ship == 'C' || ship == 'S') {len = 3;}
 	else {len = 2;}
 
+	//out-of-bound
 	//set up row and col
 	int c = col - 'A';
 	int r = row - '0';
-
-	//changing variables in char**
-	while (len) {
-		if (home->board_[r][c] != '.') {
-			display(home, opp);
-			printf("\nERROR: Overlapping ships, please try again.\n");
-			return 0;
-		}
-		r = r+y;
-		c = c+x;
-		len--;
-	}
-
-	//out-of-bound
-	//set up row and col
-	c = col - 'A';
-	r = row - '0';
 
 	// set up direction
 	if (dir == 'L') {
@@ -172,6 +156,26 @@ int placement_valid (char ship, char col, char row, char dir, struct board * hom
 		}
 	}
 
+	//set up row and col
+	c = col - 'A';
+	r = row - '0';
+
+	//changing variables in char**
+	while (len) {
+		if (home->board_[r][c] != '.') {
+			display(home, opp);
+			printf("\nERROR: Overlapping ships, please try again.\n");
+			return 0;
+		}
+		r = r+y;
+printf("r: %d\n", r);
+		c = c+x;
+printf("c: %d\n", c);
+		len--;
+printf("len: %d\n", len);
+	}
+printf("test\n");
+
 	// ship already placed
 	if (ship != shipP[0][0] && ship != shipP[1][0] && ship != shipP[2][0] && ship != shipP[3][0] && ship != shipP[4][0]) {
 		display(home, opp);
@@ -187,7 +191,7 @@ int missile_valid (char col, char row, struct board * home, struct board * opp){
 	int c = col - 'A';
 	int r = row - '0';
 
-	if (c < 0 || c > 7 || r < 0 || r > 9) {
+	if (c < 0 || c > 7 || r < 0 || r > 7) {
 		display(home, opp);
 		printf("\nERROR: Coordinate out of bounds, please try again.\n");
 		return 0;
