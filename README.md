@@ -32,7 +32,7 @@ Neither you nor your opponent know where each other's ships are placed. You take
 
 ### Setup Phase
 
-You will be asked to input the ship, the starting coordinates of the location, and the direction in which it extends.
+You will be asked to input the ship, the starting coordinates of the location, and the direction in which it extends. Lowercase letters also work.
 1. the available ships
   * A: aircraft, size 5
   * B: battleship, size 4
