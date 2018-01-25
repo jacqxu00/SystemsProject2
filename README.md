@@ -7,7 +7,11 @@ PLAYER 1 INSTRUCTIONS
 1. Open up the terminal.
 2. Follow these instructions:
 ```
+<<<<<<< HEAD
 $ hostname -I // give PLAYER 2 the IP address
+=======
+$ hostname -I // give IP address to PLAYER 2
+>>>>>>> 0f767b56a3c35d83b04f92c544afe441a5ad4a89
 $ git clone https://github.com/jacqxu00/SystemsProject2.git
 $ cd SystemsProject2
 $ make run_1
