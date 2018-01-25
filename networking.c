@@ -49,5 +49,4 @@ int connecting (int player, char * address, int * listen_socket_p, int * client_
 		*server_socket_p = client_setup(address);
 	}
 	return 1;
-	return 0;
 }
