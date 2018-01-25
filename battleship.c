@@ -554,12 +554,12 @@ int main(int argc, char ** argv) {
 	// print game over statements
 	if (game_over(home, opponent) == 1) {
 		pretty_spacing(30);
-		printf("\nGAME OVER. You've lost.\n");
+		printf("\n            GAME OVER. You've lost.\n");
 		pretty_spacing(10);
 	}
 	else if (game_over(home, opponent) == 2) {
 		pretty_spacing(30);
-		printf("\nCONGRATULATIONS! You've won!\n");
+		printf("\n         CONGRATULATIONS! You've won!\n");
 		pretty_spacing(10);
 	}
 

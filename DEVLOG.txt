@@ -108,3 +108,4 @@ chenW, kangY, xuJ -- 2018-01-25 15:42
 	added comments
 	cleaned up code
 	fixed format
+	be able to take in lowercase inputs

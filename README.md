@@ -3,6 +3,8 @@ Created by: Winnie Chen, Yedoh Kang, Jackie Xu (Period 4)
 
 ## Launch Instructions
 
+* Make sure that PLAYER 1 runs the program first.
+
 PLAYER 1 INSTRUCTIONS
 1. Open up the terminal.
 2. Follow these instructions:
@@ -32,7 +34,7 @@ Neither you nor your opponent know where each other's ships are placed. You take
 
 ### Setup Phase
 
-You will be asked to input the ship, the starting coordinates of the location, and the direction in which it extends. Lowercase letters also work.
+You will be asked to input the ship, the starting coordinates of the location, and the direction in which it extends.
 1. the available ships
   * A: aircraft, size 5
   * B: battleship, size 4
